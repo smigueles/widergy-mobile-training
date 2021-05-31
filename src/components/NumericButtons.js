@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-const NUmericButtons = ({mNumbers, handlePress, styles}) => {
+const NumericButtons = ({mNumbers, handlePress, styles}) => {
   return (
     <View style={styles.numbers}>
       {mNumbers.map((aNumbers, i) => {
