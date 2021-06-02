@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Alert} from 'react-native';
-import NUmericButtons from '../../components/NumericButtons';
-import OpButtons from '../../components/OpButtons';
-import {styles} from './index.style';
 
-const Main = () => {
+import CalcButton from '../../components/CalcButtons';
+import {styles} from './style';
+
+const Display = () => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
-
   const handlePress = number => {
     if (number === '=') {
       return calculation();
@@ -51,7 +50,7 @@ const Main = () => {
     }
     Alert.alert(
       'Only numbers & basic operator',
-      'Select a number and/or  basic operator, please :)',
+      'Select a number and/or  basic operator(+, -, /, *), please :)',
     );
   };
 
@@ -67,18 +66,43 @@ const Main = () => {
       return;
     }
 
-    if (aOperations.includes(userText.toString().split('').pop())) return;
+    if (
+      ['Del', 'Clear', '+', '-', '*', '/'].includes(
+        userText.toString().split('').pop(),
+      )
+    ) {
+      return;
+    }
     setUserText(userText + op);
   };
 
-  const mNumbers = [
-    [7, 8, 9],
-    [4, 5, 6],
-    [1, 2, 3],
-    ['.', 0, '='],
+  const BUTTONS = [
+    {
+      type: 'operations',
+      labels: ['Del', 'Clear', '+', '-', '*', '/'],
+      action: b => handleOperation(b),
+    },
+    {
+      type: 'numbers',
+      labels: [7, 8, 9],
+      action: b => handlePress(b),
+    },
+    {
+      type: 'numbers',
+      labels: [4, 5, 6],
+      action: b => handlePress(b),
+    },
+    {
+      type: 'numbers',
+      labels: [1, 2, 3],
+      action: b => handlePress(b),
+    },
+    {
+      type: 'numbers',
+      labels: ['.', 0, '='],
+      action: b => handlePress(b),
+    },
   ];
-
-  const aOperations = ['Del', 'Clear', '+', '-', '*', '/'];
 
   return (
     <View style={styles.container}>
@@ -93,20 +117,9 @@ const Main = () => {
           value={userText}
         />
       </View>
-      <View style={styles.buttons}>
-        <NUmericButtons
-          mNumbers={mNumbers}
-          styles={styles}
-          handlePress={handlePress}
-        />
-        <OpButtons
-          styles={styles}
-          handleOperation={handleOperation}
-          aOperations={aOperations}
-        />
-      </View>
+      <CalcButton buttons={BUTTONS} />
     </View>
   );
 };
 
-export default Main;
+export default Display;

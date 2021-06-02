@@ -18,42 +18,24 @@ export const styles = StyleSheet.create({
     flex: 7,
     flexDirection: 'row',
   },
-  numbers: {
-    backgroundColor: '#4f4364',
-    flex: 3,
-  },
-  operations: {
-    flex: 1,
-    backgroundColor: '#bd94ff',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
+
   resultText: {
+    flex: 1,
     fontSize: 30,
     fontWeight: 'bold',
     color: '#1f1633',
   },
   calcText: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
     borderWidth: 1,
     borderColor: 'black',
-    width: 410,
+    width: 400,
     height: 100,
-  },
-  row: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  number: {
-    color: '#fffade',
-    fontSize: 30,
-  },
-  operationButton: {
-    color: '#1f1633',
-    fontSize: 30,
+    paddingLeft: 10,
   },
 });

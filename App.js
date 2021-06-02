@@ -7,9 +7,9 @@
  */
 
 import React from 'react';
-import Main from './src/screens/main';
+import Display from './src/screens/Display';
 
 const App = () => {
-  return <Main />;
+  return <Display />;
 };
 export default App;
