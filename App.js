@@ -7,9 +7,16 @@
  */
 
 import React from 'react';
+import {Provider} from 'react-redux';
+
 import Display from './src/screens/Display';
+import {store} from './src/redux/store';
 
 const App = () => {
-  return <Display />;
+  return (
+    <Provider store={store}>
+      <Display />
+    </Provider>
+  );
 };
 export default App;

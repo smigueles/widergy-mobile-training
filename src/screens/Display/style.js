@@ -32,10 +32,5 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: 400,
-    height: 100,
-    paddingLeft: 10,
   },
 });
