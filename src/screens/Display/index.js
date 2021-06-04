@@ -4,53 +4,18 @@ import {View, Text, TextInput, Alert, Button} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {saveExp, deleteExp, clearRegisters, editExp} from '../../redux/actions';
+import {saveExp, clearRegisters} from '../../redux/actions';
 import Record from '../Record';
+import {RULES} from '../../constants/rules';
 
 const mapStateToProps = state => {
   const {history} = state;
   return {history};
 };
 
-const RULES = [
-  '+',
-  '-',
-  '/',
-  '*',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
-];
-
-const Display = ({history, saveExp, deleteExp, clearRegisters, editExp}) => {
+const Display = ({history, saveExp, clearRegisters}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
-  const [show, setShow] = useState(false);
-  const [editTxt, setEditTxt] = useState('');
-
-  const handleEditTxt = e => {
-    if (e.nativeEvent.key === 'Backspace') {
-      setEditTxt(editTxt.toString().substring(0, editTxt.length - 1));
-      return;
-    }
-    if (RULES.some(rule => rule === e.nativeEvent.key)) {
-      setEditTxt(editTxt + e.nativeEvent.key);
-      return;
-    }
-  };
-
-  const save = (exp, id) => {
-    editExp(exp, id);
-    setShow(!show);
-    setEditTxt('');
-  };
 
   const handlePress = number => {
     if (number === '=') {
@@ -82,6 +47,8 @@ const Display = ({history, saveExp, deleteExp, clearRegisters, editExp}) => {
       'Select a number and/or  basic operator(+, -, /, *), please :)',
     );
   };
+
+  const copy = handlePress;
 
   const handleOperation = op => {
     if (op === 'Clear') {
@@ -119,7 +86,7 @@ const Display = ({history, saveExp, deleteExp, clearRegisters, editExp}) => {
     {
       type: 'numbers',
       labels: [4, 5, 6],
-      action: b => handlePress(b),
+      action: b => copy(b),
     },
     {
       type: 'numbers',
@@ -135,16 +102,7 @@ const Display = ({history, saveExp, deleteExp, clearRegisters, editExp}) => {
 
   return (
     <View style={styles.container}>
-      <Record
-        save={save}
-        history={history}
-        deleteExp={deleteExp}
-        handleEditTxt={handleEditTxt}
-        show={show}
-        setShow={setShow}
-        editTxt={editTxt}
-        styles={styles}
-      />
+      <Record styles={styles} />
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <Button title="Agregar" onPress={() => saveExp(userText)} />
@@ -167,7 +125,5 @@ const Display = ({history, saveExp, deleteExp, clearRegisters, editExp}) => {
 
 export default connect(mapStateToProps, {
   saveExp,
-  deleteExp,
   clearRegisters,
-  editExp,
 })(Display);
