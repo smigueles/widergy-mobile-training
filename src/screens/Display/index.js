@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {View, Text, TextInput, Alert, Button, ScrollView} from 'react-native';
+import {View, Text, TextInput, Alert, Button} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
 import {saveExp, deleteExp, clearRegisters, editExp} from '../../redux/actions';
+import Record from '../Record';
 
 const mapStateToProps = state => {
   const {history} = state;
   return {history};
 };
+
 const RULES = [
   '+',
   '-',
@@ -26,7 +28,8 @@ const RULES = [
   '9',
   '0',
 ];
-const Display = props => {
+
+const Display = ({history, saveExp, deleteExp, clearRegisters, editExp}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const [show, setShow] = useState(false);
@@ -44,7 +47,7 @@ const Display = props => {
   };
 
   const save = (exp, id) => {
-    props.editExp(exp, id);
+    editExp(exp, id);
     setShow(!show);
     setEditTxt('');
   };
@@ -60,6 +63,7 @@ const Display = props => {
     // eslint-disable-next-line no-eval
     setCalcText(eval(userText));
   };
+
   const handleInput = event => {
     if (event.nativeEvent.key === 'Backspace') {
       setUserText(userText.toString().substring(0, userText.length - 1));
@@ -131,28 +135,22 @@ const Display = props => {
 
   return (
     <View style={styles.container}>
+      <Record
+        save={save}
+        history={history}
+        deleteExp={deleteExp}
+        handleEditTxt={handleEditTxt}
+        show={show}
+        setShow={setShow}
+        editTxt={editTxt}
+        styles={styles}
+      />
       <View style={styles.result}>
-        {/* <Text style={styles.resultText}>{calcText}</Text> */}
-        <Button title="Agregar" onPress={() => props.saveExp(userText)} />
-        {/*  <Button title="clear" onPress={() => props.clearRegisters()} /> */}
-        {props.history.registers.map((n, i) => (
-          <View key={n.id}>
-            <Text>{n.expresion}</Text>
-            <Button title="x" onPress={() => props.deleteExp(n.id)} />
-            {show === false ? (
-              <Button title="Editar" onPress={() => setShow(!show)} key={i} />
-            ) : (
-              <Button
-                title="Guardar"
-                onPress={() => save(editTxt, n.id)}
-                key={i}
-              />
-            )}
-            {show && (
-              <TextInput placeholder={n.expresion} onKeyPress={handleEditTxt} />
-            )}
-          </View>
-        ))}
+        <Text style={styles.resultText}>{calcText}</Text>
+        <Button title="Agregar" onPress={() => saveExp(userText)} />
+        {history.registers.length !== 0 && (
+          <Button title="clear" onPress={() => clearRegisters()} />
+        )}
       </View>
       <View style={styles.calculation}>
         <TextInput

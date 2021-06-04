@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
   calculation: {
     flex: 1,
     backgroundColor: '#e8d5b5',
+    flexDirection: 'row',
     alignItems: 'flex-end',
   },
   buttons: {
@@ -28,9 +29,12 @@ export const styles = StyleSheet.create({
   calcText: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignSelf: 'flex-end',
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+  },
+  history: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });
