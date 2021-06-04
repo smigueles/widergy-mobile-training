@@ -102,12 +102,12 @@ const Display = ({history, saveExp, clearRegisters}) => {
 
   return (
     <View style={styles.container}>
-      <Record styles={styles} />
+      <Record />
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
-        <Button title="Agregar" onPress={() => saveExp(userText)} />
+        <Button title="Add" onPress={() => saveExp(userText)} />
         {history.registers.length !== 0 && (
-          <Button title="clear" onPress={() => clearRegisters()} />
+          <Button title="Clear" onPress={() => clearRegisters()} />
         )}
       </View>
       <View style={styles.calculation}>

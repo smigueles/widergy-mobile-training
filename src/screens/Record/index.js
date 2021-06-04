@@ -5,12 +5,14 @@ import {View, Button, Text, TextInput} from 'react-native';
 import {editExp, deleteExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 
+import {styles} from './style';
+
 const mapStateToProps = state => {
   const {history} = state;
   return {history};
 };
 
-const Record = ({history, deleteExp, styles, editExp}) => {
+const Record = ({history, deleteExp, editExp}) => {
   const [show, setShow] = useState(false);
   const [editTxt, setEditTxt] = useState('');
 
@@ -47,13 +49,9 @@ const Record = ({history, deleteExp, styles, editExp}) => {
           )}
           <Button title="x" onPress={() => deleteExp(n.id)} />
           {show === false ? (
-            <Button title="Editar" onPress={() => setShow(!show)} key={i} />
+            <Button title="Edit" onPress={() => setShow(!show)} key={i} />
           ) : (
-            <Button
-              title="Guardar"
-              onPress={() => save(editTxt, n.id)}
-              key={i}
-            />
+            <Button title="Save" onPress={() => save(editTxt, n.id)} key={i} />
           )}
         </View>
       ))}

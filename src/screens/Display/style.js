@@ -33,8 +33,4 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-  history: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
 });
