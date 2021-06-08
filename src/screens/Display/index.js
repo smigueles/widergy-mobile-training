@@ -7,6 +7,7 @@ import {styles} from './style';
 import {saveExp, clearRegisters} from '../../redux/actions';
 import Record from '../Record';
 import {RULES} from '../../constants/rules';
+import {buttonsCreator} from '../../utils/buttons';
 
 const mapStateToProps = state => {
   const {history} = state;
@@ -16,13 +17,6 @@ const mapStateToProps = state => {
 const Display = ({history, saveExp, clearRegisters}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
-
-  const handlePress = number => {
-    if (number === '=') {
-      return calculation();
-    }
-    setUserText(userText + number);
-  };
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -48,57 +42,7 @@ const Display = ({history, saveExp, clearRegisters}) => {
     );
   };
 
-  const copy = handlePress;
-
-  const handleOperation = op => {
-    if (op === 'Clear') {
-      setUserText('');
-      setCalcText(0);
-      return;
-    }
-
-    if (op === 'Del') {
-      setUserText(userText.toString().substring(0, userText.length - 1));
-      return;
-    }
-
-    if (
-      ['Del', 'Clear', '+', '-', '*', '/'].includes(
-        userText.toString().split('').pop(),
-      )
-    ) {
-      return;
-    }
-    setUserText(userText + op);
-  };
-
-  const BUTTONS = [
-    {
-      type: 'operations',
-      labels: ['Del', 'Clear', '+', '-', '*', '/'],
-      action: b => handleOperation(b),
-    },
-    {
-      type: 'numbers',
-      labels: [7, 8, 9],
-      action: b => handlePress(b),
-    },
-    {
-      type: 'numbers',
-      labels: [4, 5, 6],
-      action: b => copy(b),
-    },
-    {
-      type: 'numbers',
-      labels: [1, 2, 3],
-      action: b => handlePress(b),
-    },
-    {
-      type: 'numbers',
-      labels: ['.', 0, '='],
-      action: b => handlePress(b),
-    },
-  ];
+  const buttons = buttonsCreator(userText, setUserText, setCalcText);
 
   return (
     <View style={styles.container}>
@@ -118,7 +62,7 @@ const Display = ({history, saveExp, clearRegisters}) => {
           value={userText}
         />
       </View>
-      <CalcButton buttons={BUTTONS} />
+      <CalcButton buttons={buttons} />
     </View>
   );
 };
