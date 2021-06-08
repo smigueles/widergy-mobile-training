@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {View, TouchableOpacity, Text} from 'react-native';
 
 import {clearRegisters} from '../../redux/actions';
@@ -13,7 +13,8 @@ const mapStateToProps = state => {
   return {history};
 };
 
-const Record = ({history, navigation, clearRegisters}) => {
+const Record = ({history, navigation}) => {
+  const dispatch = useDispatch();
   return (
     <>
       <View style={styles?.navigation}>
@@ -24,7 +25,7 @@ const Record = ({history, navigation, clearRegisters}) => {
         </TouchableOpacity>
         {history.registers.length !== 0 && (
           <TouchableOpacity
-            onPress={() => clearRegisters()}
+            onPress={() => dispatch(clearRegisters())}
             style={styles?.btnItem}>
             <Text style={styles.itemTxt}>Clear</Text>
           </TouchableOpacity>
@@ -39,4 +40,4 @@ const Record = ({history, navigation, clearRegisters}) => {
   );
 };
 
-export default connect(mapStateToProps, {clearRegisters})(Record);
+export default connect(mapStateToProps)(Record);

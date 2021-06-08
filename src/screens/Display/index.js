@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
@@ -8,9 +8,10 @@ import {saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
-const Display = ({saveExp, navigation}) => {
+const Display = ({navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
+  const dispatch = useDispatch();
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -48,7 +49,7 @@ const Display = ({saveExp, navigation}) => {
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => saveExp(userText)}
+          onPress={() => dispatch(saveExp(userText))}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>
@@ -66,6 +67,4 @@ const Display = ({saveExp, navigation}) => {
   );
 };
 
-export default connect(null, {
-  saveExp,
-})(Display);
+export default connect(null)(Display);

@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {styles} from './style';
 
 import {deleteExp, editExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 
-const CardExpression = ({n, deleteExp, editExp}) => {
+const CardExpression = ({n}) => {
   const [show, setShow] = useState(false);
   const [editTxt, setEditTxt] = useState('');
+  const dispatch = useDispatch();
 
   const handleEditTxt = e => {
     if (e.nativeEvent.key === 'Backspace') {
@@ -24,7 +25,7 @@ const CardExpression = ({n, deleteExp, editExp}) => {
   };
 
   const save = (exp, id) => {
-    editExp(exp, id);
+    dispatch(editExp(exp, id));
     setShow(!show);
     setEditTxt('');
   };
@@ -41,7 +42,9 @@ const CardExpression = ({n, deleteExp, editExp}) => {
           value={editTxt}
         />
       )}
-      <TouchableOpacity onPress={() => deleteExp(n.id)} style={styles?.btn}>
+      <TouchableOpacity
+        onPress={() => dispatch(deleteExp(n.id))}
+        style={styles?.btn}>
         <Text style={styles?.btnText}>X</Text>
       </TouchableOpacity>
       {show === false ? (
@@ -63,4 +66,4 @@ const CardExpression = ({n, deleteExp, editExp}) => {
   );
 };
 
-export default connect(null, {deleteExp, editExp})(CardExpression);
+export default CardExpression;
