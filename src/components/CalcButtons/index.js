@@ -20,7 +20,7 @@ const CalcButton = ({buttons = []}) => {
                   key={index}
                   label={n}
                   style={styles.number}
-                  handlePress={numericButtons.action}
+                  handlePress={() => numericButtons.action(n)}
                 />
               ))}
             </View>

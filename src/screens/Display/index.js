@@ -14,15 +14,6 @@ const Display = ({saveExp, navigation}) => {
   const [calcText, setCalcText] = useState('');
   const [log, setLog] = useState('');
 
-  useEffect(() => {
-    api
-      .get('/users')
-      .then(r => {
-        return r.data;
-      })
-      .then(r => setLog(log + r[0].id));
-  }, []);
-
   const calculation = () => {
     // eslint-disable-next-line no-eval
     setCalcText(eval(userText));
