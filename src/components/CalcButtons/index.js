@@ -8,7 +8,6 @@ import {getButtons} from '../../utils/calcButtons';
 const CalcButton = ({buttons = []}) => {
   const numericButtons = getButtons(buttons, 'numbers');
   const opButtons = getButtons(buttons, 'operations');
-
   return (
     <View style={styles.buttons}>
       <View style={styles.numbers}>
