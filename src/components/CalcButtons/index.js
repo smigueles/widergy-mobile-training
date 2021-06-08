@@ -1,7 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import OpButtons from './OpButtons';
 import Button from './Button';
 import {styles} from './styles';
 import {getButtons} from '../../utils/calcButtons';
@@ -20,7 +19,7 @@ const CalcButton = ({buttons = []}) => {
                   key={index}
                   label={n}
                   style={styles.number}
-                  handlePress={numberButtons.action}
+                  handlePress={() => numberButtons.action(n)}
                 />
               ))}
             </View>
@@ -33,7 +32,7 @@ const CalcButton = ({buttons = []}) => {
             key={i}
             label={op}
             style={styles.operationButton}
-            handlePress={opButtons.action}
+            handlePress={() => opButtons.action(op)}
           />
         ))}
       </View>
