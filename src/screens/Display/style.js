@@ -4,22 +4,35 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  navigateButton: {
+    backgroundColor: '#4f4364',
+  },
+  navigateTxt: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1f1633',
+  },
+  btnAdd: {
+    margin: 5,
+    backgroundColor: '#e8d5b5',
+    borderRadius: 20,
+    padding: 5,
+  },
+  btnAddTxt: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#1f1633',
+  },
   result: {
     flex: 2,
     backgroundColor: '#fffade',
     alignItems: 'flex-end',
   },
   calculation: {
-    flex: 1,
     backgroundColor: '#e8d5b5',
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
   },
-  buttons: {
-    flex: 7,
-    flexDirection: 'row',
-  },
-
   resultText: {
     flex: 1,
     fontSize: 30,
@@ -27,7 +40,7 @@ export const styles = StyleSheet.create({
     color: '#1f1633',
   },
   calcText: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'flex-end',
     fontSize: 20,
     fontWeight: 'bold',

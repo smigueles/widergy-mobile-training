@@ -1,20 +1,14 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {View, Text, TextInput, Alert, Button} from 'react-native';
+import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {saveExp, clearRegisters} from '../../redux/actions';
-import Record from '../Record';
+import {saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
-const mapStateToProps = state => {
-  const {history} = state;
-  return {history};
-};
-
-const Display = ({history, saveExp, clearRegisters}) => {
+const Display = ({saveExp, navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
 
@@ -46,13 +40,18 @@ const Display = ({history, saveExp, clearRegisters}) => {
 
   return (
     <View style={styles.container}>
-      <Record />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('History')}
+        style={styles.navigateButton}>
+        <Text style={styles.navigateTxt}>Go to History</Text>
+      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
-        <Button title="Add" onPress={() => saveExp(userText)} />
-        {history.registers.length !== 0 && (
-          <Button title="Clear" onPress={() => clearRegisters()} />
-        )}
+        <TouchableOpacity
+          onPress={() => saveExp(userText)}
+          style={styles.btnAdd}>
+          <Text style={styles.btnAddTxt}>Add</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.calculation}>
         <TextInput
@@ -67,7 +66,6 @@ const Display = ({history, saveExp, clearRegisters}) => {
   );
 };
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   saveExp,
-  clearRegisters,
 })(Display);

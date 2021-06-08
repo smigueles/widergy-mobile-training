@@ -34,7 +34,6 @@ export const historyReducer = (state = INITIAL_STATE, action) => {
       return {...state, registers};
     }
 
-    // eslint-disable-next-line no-fallthrough
     default:
       return state;
   }
