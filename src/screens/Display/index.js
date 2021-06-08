@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {connect, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
@@ -67,4 +67,4 @@ const Display = ({navigation}) => {
   );
 };
 
-export default connect(null)(Display);
+export default Display;
