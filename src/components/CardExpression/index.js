@@ -50,7 +50,11 @@ const CardExpression = ({n, deleteExp, editExp}) => {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
-          onPress={() => save(editTxt, n.id)}
+          onPress={
+            editTxt !== ''
+              ? () => save(editTxt, n.id)
+              : () => save(n.expresion, n.id)
+          }
           style={styles?.btn}>
           <Text style={styles?.btnText}>Save</Text>
         </TouchableOpacity>

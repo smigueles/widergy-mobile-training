@@ -22,22 +22,20 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#e8d5b5',
+            },
+          }}>
           <Stack.Screen
             name="Home"
             options={{
               title: 'Calculator',
-              headerStyle: {
-                backgroundColor: '#e8d5b5',
-              },
             }}
             component={Display}
           />
-          <Stack.Screen
-            name="History"
-            component={Record}
-            options={{headerStyle: {backgroundColor: '#e8d5b5'}}}
-          />
+          <Stack.Screen name="History" component={Record} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
