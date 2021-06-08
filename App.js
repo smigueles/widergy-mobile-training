@@ -13,6 +13,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Display from './src/screens/Display';
 import Record from './src/screens/Record';
+import Welcome from './src/screens/Welcome';
 
 import {store} from './src/redux/store';
 
@@ -36,6 +37,11 @@ const App = () => {
           <Stack.Screen
             name="History"
             component={Record}
+            options={{headerStyle: {backgroundColor: '#e8d5b5'}}}
+          />
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
             options={{headerStyle: {backgroundColor: '#e8d5b5'}}}
           />
         </Stack.Navigator>

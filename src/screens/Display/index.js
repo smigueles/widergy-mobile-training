@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
@@ -7,10 +7,21 @@ import {styles} from './style';
 import {saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
+import {api} from '../../api/jsonPlaceHolder';
 
 const Display = ({saveExp, navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
+  const [log, setLog] = useState('');
+
+  useEffect(() => {
+    api
+      .get('/users')
+      .then(r => {
+        return r.data;
+      })
+      .then(r => setLog(log + r[0].id));
+  }, []);
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -40,10 +51,16 @@ const Display = ({saveExp, navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Text>{log}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate('History')}
         style={styles.navigateButton}>
         <Text style={styles.navigateTxt}>Go to History</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Welcome')}
+        style={styles.navigateButton}>
+        <Text style={styles.navigateTxt}>Go to Welcome</Text>
       </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
