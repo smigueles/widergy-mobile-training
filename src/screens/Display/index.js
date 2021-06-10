@@ -4,7 +4,7 @@ import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {fullState, saveExp} from '../../redux/actions';
+import {saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 import {api} from '../../api/swaggerApi';
@@ -18,28 +18,6 @@ const Display = ({user, history, navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    getData();
-
-    async function getData() {
-      try {
-        const response = await api.get(
-          '/calc/expressions',
-          {},
-          {headers: {Authorization: user.token}},
-        );
-        const dataServer = response.data;
-        if (dataServer.data) {
-          dispatch(fullState(dataServer.data));
-          return;
-        }
-        throw new Error(dataServer.error);
-      } catch (err) {
-        Alert.alert(err.message);
-      }
-    }
-  }, [dispatch, user.token, history.registers]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
