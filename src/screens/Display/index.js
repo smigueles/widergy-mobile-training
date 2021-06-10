@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
+<<<<<<< HEAD
 import {useDispatch} from 'react-redux';
+=======
+import {connect} from 'react-redux';
+>>>>>>> 12d16d7ce42a881e36694ed36e4b1dd6fe273482
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
@@ -8,10 +12,16 @@ import {saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
+<<<<<<< HEAD
 const Display = ({navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
+=======
+const Display = ({saveExp, navigation}) => {
+  const [userText, setUserText] = useState('');
+  const [calcText, setCalcText] = useState('');
+>>>>>>> 12d16d7ce42a881e36694ed36e4b1dd6fe273482
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -49,7 +59,11 @@ const Display = ({navigation}) => {
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
+<<<<<<< HEAD
           onPress={() => dispatch(saveExp(userText))}
+=======
+          onPress={() => saveExp(userText)}
+>>>>>>> 12d16d7ce42a881e36694ed36e4b1dd6fe273482
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>
@@ -67,4 +81,10 @@ const Display = ({navigation}) => {
   );
 };
 
+<<<<<<< HEAD
 export default Display;
+=======
+export default connect(null, {
+  saveExp,
+})(Display);
+>>>>>>> 12d16d7ce42a881e36694ed36e4b1dd6fe273482
