@@ -33,7 +33,7 @@ const CalcButton = ({buttons = []}) => {
             key={i}
             label={op}
             style={styles.operationButton}
-            handlePress={opButtons.action}
+            handlePress={() => opButtons.action(op)}
           />
         ))}
       </View>

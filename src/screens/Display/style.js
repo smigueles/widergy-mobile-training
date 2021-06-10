@@ -6,9 +6,11 @@ export const styles = StyleSheet.create({
   },
   navigateButton: {
     backgroundColor: '#4f4364',
+    borderRadius: 12,
   },
   navigateTxt: {
-    fontSize: 20,
+    padding: 3,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#1f1633',
   },

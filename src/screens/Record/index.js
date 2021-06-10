@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {View, TouchableOpacity, Text} from 'react-native';
 
 import {clearRegisters} from '../../redux/actions';
@@ -9,14 +9,16 @@ import CardExpression from '../../components/CardExpression';
 import {styles} from './style';
 
 const mapStateToProps = state => {
-  const {history} = state;
-  return {history};
+  const {history, user} = state;
+  return {history, user};
 };
 
-const Record = ({history, navigation, clearRegisters}) => {
+const Record = ({history, user, navigation}) => {
+  const dispatch = useDispatch();
+
   return (
     <>
-      <View style={styles?.navigation}>
+      <View style={styles.navigation}>
         <TouchableOpacity
           onPress={() => navigation.navigate('Home')}
           style={styles?.btnItem}>
@@ -24,7 +26,7 @@ const Record = ({history, navigation, clearRegisters}) => {
         </TouchableOpacity>
         {history.registers.length !== 0 && (
           <TouchableOpacity
-            onPress={() => clearRegisters()}
+            onPress={() => dispatch(clearRegisters(user.token))}
             style={styles?.btnItem}>
             <Text style={styles.itemTxt}>Clear</Text>
           </TouchableOpacity>
@@ -39,4 +41,4 @@ const Record = ({history, navigation, clearRegisters}) => {
   );
 };
 
-export default connect(mapStateToProps, {clearRegisters})(Record);
+export default connect(mapStateToProps)(Record);

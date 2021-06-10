@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import {styles} from './style';
 
 import {deleteExp, editExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 
-const CardExpression = ({n, deleteExp, editExp}) => {
+const CardExpression = ({n}) => {
   const [show, setShow] = useState(false);
   const [editTxt, setEditTxt] = useState('');
+  const dispatch = useDispatch();
 
   const handleEditTxt = e => {
     if (e.nativeEvent.key === 'Backspace') {
@@ -24,7 +25,7 @@ const CardExpression = ({n, deleteExp, editExp}) => {
   };
 
   const save = (exp, id) => {
-    editExp(exp, id);
+    dispatch(editExp(exp, id));
     setShow(!show);
     setEditTxt('');
   };
@@ -32,16 +33,18 @@ const CardExpression = ({n, deleteExp, editExp}) => {
   return (
     <View style={styles.box}>
       {show === false ? (
-        <Text style={styles?.text}>{n.expresion}</Text>
+        <Text style={styles.text}>{n.expression}</Text>
       ) : (
         <TextInput
-          style={styles?.text}
-          placeholder={n.expresion}
+          style={styles.text}
+          placeholder={n.expression}
           onKeyPress={handleEditTxt}
           value={editTxt}
         />
       )}
-      <TouchableOpacity onPress={() => deleteExp(n.id)} style={styles?.btn}>
+      <TouchableOpacity
+        onPress={() => dispatch(deleteExp(n.id))}
+        style={styles?.btn}>
         <Text style={styles?.btnText}>X</Text>
       </TouchableOpacity>
       {show === false ? (
@@ -50,7 +53,11 @@ const CardExpression = ({n, deleteExp, editExp}) => {
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
-          onPress={() => save(editTxt, n.id)}
+          onPress={
+            editTxt !== ''
+              ? () => save(editTxt, n.id)
+              : () => save(n.expression, n.id)
+          }
           style={styles?.btn}>
           <Text style={styles?.btnText}>Save</Text>
         </TouchableOpacity>
@@ -59,4 +66,4 @@ const CardExpression = ({n, deleteExp, editExp}) => {
   );
 };
 
-export default connect(null, {deleteExp, editExp})(CardExpression);
+export default CardExpression;

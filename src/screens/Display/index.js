@@ -1,18 +1,74 @@
-import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
+import {connect, useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {saveExp} from '../../redux/actions';
+import {fullState, saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
-import {api} from '../../api/jsonPlaceHolder';
+import {api} from '../../api/swaggerApi';
 
-const Display = ({saveExp, navigation}) => {
+const mapStateToProps = state => {
+  const {user, history} = state;
+  return {user, history};
+};
+
+const Display = ({user, history, navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
-  const [log, setLog] = useState('');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getData();
+
+    async function getData() {
+      try {
+        const response = await api.get(
+          '/calc/expressions',
+          {},
+          {headers: {Authorization: user.token}},
+        );
+        const dataServer = response.data;
+        if (dataServer.data) {
+          dispatch(fullState(dataServer.data));
+          return;
+        }
+        throw new Error(dataServer.error);
+      } catch (err) {
+        Alert.alert(err.message);
+      }
+    }
+  }, [dispatch, user.token, history.registers]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => handleLogout()}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
+      ),
+    });
+  });
+
+  async function handleLogout() {
+    try {
+      const logout = await api.get(
+        '/auth/logout',
+        {},
+        {headers: {Authorization: user.token}},
+      );
+      const message = await logout.data.message;
+      if (message !== undefined) {
+        Alert.alert('See ya bro!', message);
+        navigation.navigate('Welcome');
+        return;
+      }
+      throw new Error(logout.data.error);
+    } catch (err) {
+      Alert.alert('Something is wrong', err.message);
+    }
+  }
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -39,24 +95,14 @@ const Display = ({saveExp, navigation}) => {
   };
 
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
+  console.log(history.registers, 'registers');
 
   return (
     <View style={styles.container}>
-      <Text>{log}</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('History')}
-        style={styles.navigateButton}>
-        <Text style={styles.navigateTxt}>Go to History</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Welcome')}
-        style={styles.navigateButton}>
-        <Text style={styles.navigateTxt}>Go to Welcome</Text>
-      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => saveExp(userText)}
+          onPress={() => dispatch(saveExp(userText, user.token))}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>
@@ -74,6 +120,4 @@ const Display = ({saveExp, navigation}) => {
   );
 };
 
-export default connect(null, {
-  saveExp,
-})(Display);
+export default connect(mapStateToProps)(Display);
