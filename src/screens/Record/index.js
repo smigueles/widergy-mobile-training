@@ -2,7 +2,7 @@ import React from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, TouchableOpacity, Text} from 'react-native';
 
-import {clearRegisters} from '../../redux/actions';
+import actionsCreator from '../../redux/actions';
 
 import CardExpression from '../../components/CardExpression';
 
@@ -25,7 +25,7 @@ const Record = ({history, navigation}) => {
         </TouchableOpacity>
         {history.registers.length !== 0 && (
           <TouchableOpacity
-            onPress={() => dispatch(clearRegisters())}
+            onPress={() => dispatch(actionsCreator.clearRegisters())}
             style={styles?.btnItem}>
             <Text style={styles.itemTxt}>Clear</Text>
           </TouchableOpacity>

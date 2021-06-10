@@ -4,7 +4,7 @@ import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {saveExp} from '../../redux/actions';
+import actionsCreator from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
@@ -49,7 +49,7 @@ const Display = ({navigation}) => {
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => dispatch(saveExp(userText))}
+          onPress={() => dispatch(actionsCreator.saveExp(userText))}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>

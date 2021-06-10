@@ -1,37 +1,42 @@
+import {actions} from '../actions';
+
 const INITIAL_STATE = {
   registers: [],
 };
 let id = 0;
 export const historyReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'SAVE_EXPRESSION': {
+    case actions.SAVE_EXPRESSION: {
       const {registers} = state;
-      registers.push({expresion: action.payload, id: id});
+      const copyRegister = [...registers];
+      copyRegister.push({expresion: action.payload, id: id});
       id++;
 
-      return {...state, registers};
+      return {...state, registers: copyRegister};
     }
 
-    case 'DELETE_EXPRESSION': {
+    case actions.DELETE_EXPRESSION: {
       const {registers} = state;
       const searchIndex = registers.findIndex(r => r.id === action.payload);
-      registers.splice(searchIndex, 1);
+      const copyRegister = [...registers];
+      copyRegister.splice(searchIndex, 1);
 
-      return {...state, registers};
+      return {...state, registers: copyRegister};
     }
 
-    case 'CLEAR_REGISTER': {
+    case actions.CLEAR_REGISTER: {
       return {...state, registers: []};
     }
 
-    case 'EDIT_EXPRESSION': {
+    case actions.EDIT_EXPRESSION: {
       const {registers} = state;
       const searchIndex = registers.findIndex(r => r.id === action.payload.id);
-      registers[searchIndex] = {
-        ...registers[searchIndex],
+      const copyRegister = [...registers];
+      copyRegister[searchIndex] = {
+        ...copyRegister[searchIndex],
         expresion: action.payload.expresion,
       };
-      return {...state, registers};
+      return {...state, registers: copyRegister};
     }
 
     default:

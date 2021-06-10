@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {styles} from './style';
-
-import {deleteExp, editExp} from '../../redux/actions';
+import actionsCreator from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 
 const CardExpression = ({n}) => {
@@ -25,7 +24,7 @@ const CardExpression = ({n}) => {
   };
 
   const save = (exp, id) => {
-    dispatch(editExp(exp, id));
+    dispatch(actionsCreator.editExp(exp, id));
     setShow(!show);
     setEditTxt('');
   };
@@ -43,7 +42,7 @@ const CardExpression = ({n}) => {
         />
       )}
       <TouchableOpacity
-        onPress={() => dispatch(deleteExp(n.id))}
+        onPress={() => dispatch(actionsCreator.deleteExp(n.id))}
         style={styles?.btn}>
         <Text style={styles?.btnText}>X</Text>
       </TouchableOpacity>
