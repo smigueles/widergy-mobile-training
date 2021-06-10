@@ -1,44 +1,29 @@
-import {
-  SAVE_EXPRESSION,
-  DELETE_EXPRESSION,
-  CLEAR_REGISTER,
-  EDIT_EXPRESSION,
-  REGISTER_TOKEN,
-  FULL_STATE,
-} from './actionTypes';
+import {createTypes} from 'redux-recompose';
 
-export const saveExp = (expression, token) => ({
-  type: SAVE_EXPRESSION,
-  payload: {expression: expression, token: token},
-});
+export const actions = createTypes(
+  ['SAVE_EXPRESSION', 'DELETE_EXPRESSION', 'CLEAR_REGISTER', 'EDIT_EXPRESSION'],
+  '@HISTORY',
+);
 
-export const deleteExp = (id, token) => ({
-  type: DELETE_EXPRESSION,
-  payload: {
-    id: id,
-    token: token,
-  },
-});
+const actionsCreator = {
+  saveExp: expresion => ({
+    type: actions.SAVE_EXPRESSION,
+    payload: expresion,
+  }),
+  deleteExp: id => ({
+    type: actions.DELETE_EXPRESSION,
+    payload: id,
+  }),
+  clearRegisters: () => ({
+    type: actions.CLEAR_REGISTER,
+  }),
+  editExp: (expresion, id) => ({
+    type: actions.EDIT_EXPRESSION,
+    payload: {
+      expresion: expresion,
+      id: id,
+    },
+  }),
+};
 
-export const clearRegisters = token => ({
-  type: CLEAR_REGISTER,
-  payload: token,
-});
-
-export const editExp = (expresion, id) => ({
-  type: EDIT_EXPRESSION,
-  payload: {
-    expresion: expresion,
-    id: id,
-  },
-});
-
-export const registerToken = token => ({
-  type: REGISTER_TOKEN,
-  payload: token,
-});
-
-export const fullState = array => ({
-  type: FULL_STATE,
-  payload: array,
-});
+export default actionsCreator;

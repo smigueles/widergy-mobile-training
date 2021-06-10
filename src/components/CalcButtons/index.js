@@ -6,13 +6,12 @@ import {styles} from './styles';
 import {getButtons} from '../../utils/calcButtons';
 
 const CalcButton = ({buttons = []}) => {
-  const numericButtons = getButtons(buttons, 'numbers');
+  const numberButtons = getButtons(buttons, 'numbers');
   const opButtons = getButtons(buttons, 'operations');
-
   return (
     <View style={styles.buttons}>
       <View style={styles.numbers}>
-        {numericButtons.numbers.map((aNumbers, i) => {
+        {numberButtons.numbers.map((aNumbers, i) => {
           return (
             <View key={i} style={styles.row}>
               {aNumbers.map((n, index) => (
@@ -20,7 +19,7 @@ const CalcButton = ({buttons = []}) => {
                   key={index}
                   label={n}
                   style={styles.number}
-                  handlePress={() => numericButtons.action(n)}
+                  handlePress={() => numberButtons.action(n)}
                 />
               ))}
             </View>

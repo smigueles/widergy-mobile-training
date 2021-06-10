@@ -4,7 +4,7 @@ import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {saveExp} from '../../redux/actions';
+import actionsCreator from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 import {api} from '../../api/swaggerApi';
@@ -73,14 +73,18 @@ const Display = ({user, history, navigation}) => {
   };
 
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
-  console.log(history.registers, 'registers');
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('History')}
+        style={styles.navigateButton}>
+        <Text style={styles.navigateTxt}>Go to History</Text>
+      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => dispatch(saveExp(userText, user.token))}
+          onPress={() => dispatch(actionsCreator.saveExp(userText))}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>
