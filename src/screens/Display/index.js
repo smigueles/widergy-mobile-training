@@ -1,10 +1,10 @@
-import React, {useState, useLayoutEffect, useEffect} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import actionsCreator from '../../redux/actions';
+import actionsCreator from '../../redux/history/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 import {api} from '../../api/swaggerApi';

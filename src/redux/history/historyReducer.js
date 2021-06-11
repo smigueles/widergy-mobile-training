@@ -1,6 +1,5 @@
-import {Alert} from 'react-native';
 import {api} from '../../api/swaggerApi';
-import {actions} from '../actions';
+import {actions} from './actions';
 
 const INITIAL_STATE = {
   registers: [],

@@ -3,7 +3,7 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {styles} from './style';
-import actionsCreator from '../../redux/actions';
+import actionsCreator from '../../redux/history/actions';
 import {RULES} from '../../constants/rules';
 
 const CardExpression = ({n}) => {

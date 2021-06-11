@@ -2,7 +2,7 @@ import React from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, TouchableOpacity, Text} from 'react-native';
 
-import actionsCreator from '../../redux/actions';
+import actionsCreator from '../../redux/history/actions';
 
 import CardExpression from '../../components/CardExpression';
 

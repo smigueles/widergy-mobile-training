@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {connect, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {api} from '../../api/swaggerApi';
-import {registerToken} from '../../redux/actions';
+import actionsCreator from '../../redux/auth/actions';
 
 import {styles} from './style';
 
@@ -28,7 +28,7 @@ const Welcome = ({navigation}) => {
       if (data.token !== undefined) {
         setUserName('');
         setUserPass('');
-        dispatch(registerToken(data.token));
+        dispatch(actionsCreator.registerToken(data.token));
         navigation.navigate('Home');
         return;
       }
@@ -46,7 +46,7 @@ const Welcome = ({navigation}) => {
       if (data.token !== undefined) {
         setUserName('');
         setUserPass('');
-        dispatch(registerToken(data.token));
+        dispatch(actionsCreator.registerToken(data.token));
         navigation.navigate('Home');
         return;
       }
@@ -77,7 +77,6 @@ const Welcome = ({navigation}) => {
 
   return (
     <View>
-      <Text>Welcome</Text>
       {showRegister === true ? (
         <>
           <TextInput
@@ -92,7 +91,9 @@ const Welcome = ({navigation}) => {
           />
           <Button title="Login" onPress={() => handleApiLogin()} />
           <TouchableOpacity onPress={() => handleRenderForms()}>
-            <Text>You not already an account? Create one</Text>
+            <Text style={styles?.welcomeText}>
+              You not already an account? Create one
+            </Text>
           </TouchableOpacity>
         </>
       ) : (
@@ -101,7 +102,9 @@ const Welcome = ({navigation}) => {
           <TextInput onChangeText={handleInputPass} style={styles.input} />
           <Button title="Register" onPress={() => handleApiRegister()} />
           <TouchableOpacity onPress={() => handleRenderForms()}>
-            <Text>Already have an account? Login</Text>
+            <Text style={styles?.welcomeText}>
+              Already have an account? Login
+            </Text>
           </TouchableOpacity>
         </>
       )}
