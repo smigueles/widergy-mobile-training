@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     alignSelf: 'center',
-    width: 200,
+    width: 220,
   },
   welcomeText: {
     alignSelf: 'center',

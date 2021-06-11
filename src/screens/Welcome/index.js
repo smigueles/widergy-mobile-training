@@ -1,60 +1,22 @@
 import React, {useState} from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
+import {useDispatch, connect} from 'react-redux';
 
-import {api} from '../../api/swaggerApi';
 import actionsCreator from '../../redux/auth/actions';
 
 import {styles} from './style';
 
-const Welcome = ({navigation}) => {
+const mapStateToProps = store => {
+  const {user} = store;
+  return {user};
+};
+
+const Welcome = ({navigation, user}) => {
   const [userName, setUserName] = useState('');
   const [userPass, setUserPass] = useState('');
   const [showRegister, setShowRegister] = useState(true);
   const dispatch = useDispatch();
-
-  async function handleApiLogin() {
-    try {
-      const res = await api.post('/auth/login', userInfo);
-      const data = res.data;
-      if (data.token !== undefined) {
-        setUserName('');
-        setUserPass('');
-        dispatch(actionsCreator.registerToken(data.token));
-        navigation.navigate('Home');
-        return;
-      }
-      throw new Error(data.error);
-    } catch (err) {
-      Alert.alert(err.message);
-      return;
-    }
-  }
-
-  async function handleApiRegister() {
-    try {
-      const res = await api.post('/auth/create', userInfo);
-      const data = res.data;
-      if (data.token !== undefined) {
-        setUserName('');
-        setUserPass('');
-        dispatch(actionsCreator.registerToken(data.token));
-        navigation.navigate('Home');
-        return;
-      }
-      throw new Error(data.error);
-    } catch (err) {
-      Alert.alert(err.message);
-    }
-  }
 
   const userInfo = {
     email: userName,
@@ -89,7 +51,12 @@ const Welcome = ({navigation}) => {
             style={styles.input}
             value={userPass}
           />
-          <Button title="Login" onPress={() => handleApiLogin()} />
+          <Button
+            title="Login"
+            onPress={() =>
+              dispatch(actionsCreator.loginToken(navigation, userInfo))
+            }
+          />
           <TouchableOpacity onPress={() => handleRenderForms()}>
             <Text style={styles?.welcomeText}>
               You not already an account? Create one
@@ -100,7 +67,12 @@ const Welcome = ({navigation}) => {
         <>
           <TextInput onChangeText={handleInputName} style={styles.input} />
           <TextInput onChangeText={handleInputPass} style={styles.input} />
-          <Button title="Register" onPress={() => handleApiRegister()} />
+          <Button
+            title="Register"
+            onPress={() =>
+              dispatch(actionsCreator.registerToken(navigation, userInfo))
+            }
+          />
           <TouchableOpacity onPress={() => handleRenderForms()}>
             <Text style={styles?.welcomeText}>
               Already have an account? Login
@@ -112,4 +84,4 @@ const Welcome = ({navigation}) => {
   );
 };
 
-export default Welcome;
+export default connect(mapStateToProps)(Welcome);

@@ -3,6 +3,8 @@ import {actions} from './actions';
 
 const INITIAL_STATE = {
   registers: [],
+  registersLoading: false,
+  registersError: null,
 };
 let id = 1;
 export function historyReducer(state = INITIAL_STATE, action) {

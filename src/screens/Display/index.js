@@ -5,16 +5,16 @@ import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
 import actionsCreator from '../../redux/history/actions';
+import authAction from '../../redux/auth/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
-import {api} from '../../api/swaggerApi';
 
 const mapStateToProps = state => {
   const {user, history} = state;
   return {user, history};
 };
 
-const Display = ({user, history, navigation}) => {
+const Display = ({user, navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
@@ -22,31 +22,15 @@ const Display = ({user, history, navigation}) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => handleLogout()}>
+        <TouchableOpacity
+          onPress={() => dispatch(authAction.logOut(navigation))}>
           <Text>Logout</Text>
         </TouchableOpacity>
       ),
     });
   });
 
-  async function handleLogout() {
-    try {
-      const logout = await api.get(
-        '/auth/logout',
-        {},
-        {headers: {Authorization: user.token}},
-      );
-      const message = await logout.data.message;
-      if (message !== undefined) {
-        Alert.alert('See ya bro!', message);
-        navigation.navigate('Welcome');
-        return;
-      }
-      throw new Error(logout.data.error);
-    } catch (err) {
-      Alert.alert('Something is wrong', err.message);
-    }
-  }
+  console.log(user.token, 'token');
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
