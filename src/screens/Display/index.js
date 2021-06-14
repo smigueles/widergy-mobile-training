@@ -39,6 +39,10 @@ const Display = ({navigation}) => {
 
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
 
+  const saveExpression = exp => {
+    dispatch(actionsCreator.saveExp(exp));
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -49,7 +53,7 @@ const Display = ({navigation}) => {
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => dispatch(actionsCreator.saveExp(userText))}
+          onPress={() => saveExpression(userText)}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>

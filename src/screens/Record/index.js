@@ -15,8 +15,13 @@ const mapStateToProps = state => {
 
 const Record = ({history, navigation}) => {
   const dispatch = useDispatch();
+
+  const deleteAll = () => {
+    dispatch(actionsCreator.clearRegisters());
+  };
+
   return (
-    <>
+    <React.Fragment>
       <View style={styles?.navigation}>
         <TouchableOpacity
           onPress={() => navigation.navigate('Home')}
@@ -24,9 +29,7 @@ const Record = ({history, navigation}) => {
           <Text style={styles.itemTxt}>Back</Text>
         </TouchableOpacity>
         {history.registers.length !== 0 && (
-          <TouchableOpacity
-            onPress={() => dispatch(actionsCreator.clearRegisters())}
-            style={styles?.btnItem}>
+          <TouchableOpacity onPress={() => deleteAll()} style={styles?.btnItem}>
             <Text style={styles.itemTxt}>Clear</Text>
           </TouchableOpacity>
         )}
@@ -36,7 +39,7 @@ const Record = ({history, navigation}) => {
           <CardExpression n={n} key={i} />
         ))}
       </View>
-    </>
+    </React.Fragment>
   );
 };
 

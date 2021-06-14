@@ -3,29 +3,25 @@ import {actions} from '../actions';
 const INITIAL_STATE = {
   registers: [],
 };
-let id = 0;
+
 export const historyReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actions.SAVE_EXPRESSION: {
       const {registers} = state;
       const copyRegister = [...registers];
-      copyRegister.push({expresion: action.payload, id: id});
-      id++;
+      copyRegister.push({expresion: action.payload, id: Math.random() * 100});
 
       return {...state, registers: copyRegister};
     }
 
     case actions.DELETE_EXPRESSION: {
       const {registers} = state;
-      const searchIndex = registers.findIndex(r => r.id === action.payload);
-      const copyRegister = [...registers];
-      copyRegister.splice(searchIndex, 1);
-
-      return {...state, registers: copyRegister};
+      const filterRegisters = registers.filter(r => r.id !== action.payload);
+      return {...state, registers: filterRegisters};
     }
 
     case actions.CLEAR_REGISTER: {
-      return {...state, registers: []};
+      return {...state, registers: INITIAL_STATE.registers};
     }
 
     case actions.EDIT_EXPRESSION: {
