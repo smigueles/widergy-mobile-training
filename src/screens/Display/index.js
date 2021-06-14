@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
@@ -6,6 +6,7 @@ import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
 import actionsCreator from '../../redux/history/actions';
 import authAction from '../../redux/auth/actions';
+import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
@@ -23,14 +24,13 @@ const Display = ({user, navigation}) => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
+          style={styles.btnLogOut}
           onPress={() => dispatch(authAction.logOut(navigation))}>
-          <Text>Logout</Text>
+          <Text style={styles.logOutTxt}>Logout</Text>
         </TouchableOpacity>
       ),
     });
   });
-
-  console.log(user.token, 'token');
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -60,15 +60,10 @@ const Display = ({user, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('History')}
-        style={styles.navigateButton}>
-        <Text style={styles.navigateTxt}>Go to History</Text>
-      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => dispatch(actionsCreator.saveExp(userText))}
+          onPress={() => dispatch(historyAction.createExpression([userText]))}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>

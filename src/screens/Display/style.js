@@ -5,18 +5,20 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   navigateButton: {
-    backgroundColor: '#4f4364',
-    borderRadius: 12,
+    margin: 5,
+    backgroundColor: '#bd94ff',
+    borderRadius: 20,
+    padding: 5,
   },
   navigateTxt: {
     padding: 3,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#1f1633',
   },
   btnAdd: {
     margin: 5,
-    backgroundColor: '#e8d5b5',
+    backgroundColor: '#bd94ff',
     borderRadius: 20,
     padding: 5,
   },
@@ -47,5 +49,16 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+  },
+  btnLogOut: {
+    margin: 5,
+    backgroundColor: '#bd94ff',
+    borderRadius: 20,
+    padding: 5,
+  },
+  logOutTxt: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#1f1633',
   },
 });

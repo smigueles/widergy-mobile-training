@@ -1,20 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, TouchableOpacity, Text} from 'react-native';
 
-import actionsCreator from '../../redux/history/actions';
-
 import CardExpression from '../../components/CardExpression';
+import historyAction from '../../redux/historyApi/actions';
 
 import {styles} from './style';
 
 const mapStateToProps = state => {
-  const {history, user} = state;
-  return {history, user};
+  const {history, user, historyApi} = state;
+  return {history, user, historyApi};
 };
 
-const Record = ({history, user, navigation}) => {
+const Record = ({historyApi, navigation}) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(historyAction.getExpressions());
+  }, [historyApi.idMsg]);
 
   return (
     <>
@@ -24,19 +27,31 @@ const Record = ({history, user, navigation}) => {
           style={styles?.btnItem}>
           <Text style={styles.itemTxt}>Back</Text>
         </TouchableOpacity>
-        {history.registers.length !== 0 && (
-          <TouchableOpacity
-            onPress={() => dispatch(actionsCreator.clearRegisters())}
-            style={styles?.btnItem}>
-            <Text style={styles.itemTxt}>Clear</Text>
-          </TouchableOpacity>
-        )}
+        {historyApi.expressions !== undefined &&
+          historyApi.expressions.length !== 0 && (
+            <TouchableOpacity
+              onPress={() =>
+                dispatch(
+                  historyAction.deleteAllExpressions(
+                    historyApi.expressions.map(e => e.id),
+                  ),
+                )
+              }
+              style={styles?.btnItem}>
+              <Text style={styles.itemTxt}>Clear</Text>
+            </TouchableOpacity>
+          )}
       </View>
-      <View style={styles?.history}>
-        {history.registers.map((n, i) => (
-          <CardExpression n={n} key={i} />
-        ))}
-      </View>
+      {historyApi.getExpressionsLoading !== false ? (
+        <Text>Loading</Text>
+      ) : (
+        <View style={styles?.history}>
+          {historyApi.expressions !== undefined &&
+            historyApi.expressions.map((n, i) => (
+              <CardExpression n={n} key={i} navigation={navigation} />
+            ))}
+        </View>
+      )}
     </>
   );
 };

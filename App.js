@@ -31,6 +31,9 @@ const App = () => {
             headerStyle: {
               backgroundColor: '#e8d5b5',
             },
+            headerTitleStyle: {
+              alignSelf: 'center',
+            },
           }}>
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen

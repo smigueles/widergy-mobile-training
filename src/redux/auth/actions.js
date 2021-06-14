@@ -1,3 +1,4 @@
+import {Alert} from 'react-native';
 import {createTypes} from 'redux-recompose';
 import {api} from '../../api/swaggerApi';
 
@@ -54,6 +55,7 @@ const actionsCreator = {
       navigation.navigate('Home');
     } else {
       dispatch(privateActionsCreator.registerTokenFailure(response.data.error));
+      Alert.alert('Something is wrong', response.data.error);
     }
   },
   loginToken: (navigation, userInfo) => async dispatch => {
@@ -66,6 +68,7 @@ const actionsCreator = {
       navigation.navigate('Home');
     } else {
       dispatch(privateActionsCreator.loginTokenFailure(response.data.error));
+      Alert.alert('Something is wrong', response.data.error);
     }
   },
   logOut: navigation => async dispatch => {
@@ -75,9 +78,11 @@ const actionsCreator = {
     const response = await api.get('/auth/logout');
     if (response.ok) {
       dispatch(privateActionsCreator.logOutSuccess(response.data.message));
+      Alert.alert('Bye Bye buddy', response.data.message);
       navigation.navigate('Welcome');
     } else {
       dispatch(privateActionsCreator.logOutFailure(response.data.error));
+      Alert.alert('Something is wrong', response.data.error);
     }
   },
 };
