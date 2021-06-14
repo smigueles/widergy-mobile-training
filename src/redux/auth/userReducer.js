@@ -1,5 +1,4 @@
 import {actions} from './actions';
-import {api} from '../../api/swaggerApi';
 
 const INITIAL_STATE = {
   token: '',

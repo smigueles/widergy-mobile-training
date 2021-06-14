@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 import {createTypes} from 'redux-recompose';
-import {api} from '../../api/swaggerApi';
+import {api} from '../../api/api';
 
 export const actions = createTypes(
   [
