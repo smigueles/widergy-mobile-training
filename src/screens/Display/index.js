@@ -1,10 +1,9 @@
-import React, {useState, useLayoutEffect, useEffect} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import actionsCreator from '../../redux/history/actions';
 import authAction from '../../redux/auth/actions';
 import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
@@ -58,12 +57,16 @@ const Display = ({user, navigation}) => {
 
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
 
+  const saveExpression = exp => {
+    dispatch(historyAction.createExpression([userText]));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
-          onPress={() => dispatch(historyAction.createExpression([userText]))}
+          onPress={() => saveExpression(userText)}
           style={styles.btnAdd}>
           <Text style={styles.btnAddTxt}>Add</Text>
         </TouchableOpacity>

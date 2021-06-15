@@ -6,8 +6,8 @@ import {styles} from './style';
 import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 
-const CardExpression = ({n, navigation}) => {
-  const [show, setShow] = useState(false);
+const CardExpression = ({n}) => {
+  const [show, setShow] = useState(true);
   const [editTxt, setEditTxt] = useState('');
   const dispatch = useDispatch();
 
@@ -24,41 +24,42 @@ const CardExpression = ({n, navigation}) => {
   };
 
   const save = (exp, id) => {
-    dispatch(historyAction.editExpressions(id, exp, navigation));
+    dispatch(historyAction.editExpressions(id, exp));
     setShow(!show);
     setEditTxt('');
   };
 
+  const saveCondition = () => {
+    return editTxt !== ''
+      ? () => save(editTxt, n.id)
+      : () => save(n.expression, n.id);
+  };
+
+  const deleteExpression = id => {
+    dispatch(historyAction.deleteExpresionById(id));
+  };
+
   return (
     <View style={styles.box}>
-      {show === false ? (
-        <Text style={styles.text}>{n.expression}</Text>
-      ) : (
-        <TextInput
-          style={styles.text}
-          placeholder={n.expression}
-          onKeyPress={handleEditTxt}
-          value={editTxt}
-        />
-      )}
+      <TextInput
+        style={styles.text}
+        placeholder={n.expression}
+        onKeyPress={handleEditTxt}
+        value={editTxt}
+        editable={!show}
+      />
       <TouchableOpacity
-        onPress={() => dispatch(historyAction.deleteExpresionById(n.id))}
-        style={styles?.btn}>
-        <Text style={styles?.btnText}>X</Text>
+        onPress={() => deleteExpression(n.id)}
+        style={styles.btn}>
+        <Text style={styles.btnText}>X</Text>
       </TouchableOpacity>
-      {show === false ? (
-        <TouchableOpacity onPress={() => setShow(!show)} style={styles?.btn}>
-          <Text style={styles?.btnText}>Edit</Text>
+      {show ? (
+        <TouchableOpacity onPress={() => setShow(!show)} style={styles.btn}>
+          <Text style={styles.btnText}>Edit</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity
-          onPress={
-            editTxt !== ''
-              ? () => save(editTxt, n.id)
-              : () => save(n.expresion, n.id)
-          }
-          style={styles?.btn}>
-          <Text style={styles?.btnText}>Save</Text>
+        <TouchableOpacity onPress={saveCondition()} style={styles.btn}>
+          <Text style={styles.btnText}>Save</Text>
         </TouchableOpacity>
       )}
     </View>

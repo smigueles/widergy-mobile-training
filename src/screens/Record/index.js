@@ -19,9 +19,15 @@ const Record = ({historyApi, navigation}) => {
     dispatch(historyAction.getExpressions());
   }, [historyApi.idMsg]);
 
+  const deleteAll = () => {
+    dispatch(
+      historyAction.deleteAllExpressions(historyApi.expressions.map(e => e.id)),
+    );
+  };
+
   return (
-    <>
-      <View style={styles.navigation}>
+    <React.Fragment>
+      <View style={styles?.navigation}>
         <TouchableOpacity
           onPress={() => navigation.navigate('Home')}
           style={styles?.btnItem}>
@@ -30,13 +36,7 @@ const Record = ({historyApi, navigation}) => {
         {historyApi.expressions !== undefined &&
           historyApi.expressions.length !== 0 && (
             <TouchableOpacity
-              onPress={() =>
-                dispatch(
-                  historyAction.deleteAllExpressions(
-                    historyApi.expressions.map(e => e.id),
-                  ),
-                )
-              }
+              onPress={() => deleteAll()}
               style={styles?.btnItem}>
               <Text style={styles.itemTxt}>Clear</Text>
             </TouchableOpacity>
@@ -52,7 +52,7 @@ const Record = ({historyApi, navigation}) => {
             ))}
         </View>
       )}
-    </>
+    </React.Fragment>
   );
 };
 

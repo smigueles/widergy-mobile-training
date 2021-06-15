@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   getExpressionsLoading: false,
   getExpressionsError: null,
   expressions: [],
-  idMsg: 0,
+  idMsg: undefined,
   createExpressionsMsg: null,
   createExpressionsLoading: false,
   createExpressionsError: null,
@@ -18,8 +18,6 @@ const INITIAL_STATE = {
   editExpMsg: null,
   editExpError: null,
 };
-
-let id = 0;
 
 export const historyApiReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -68,7 +66,7 @@ export const historyApiReducer = (state = INITIAL_STATE, action) => {
         deleteExpressionLoading: false,
         deleteExpressionError: null,
         deleteExpressionMsg: action.payload,
-        idMsg: id++,
+        idMsg: Math.random() * 100,
       };
     }
     case actions.DELETE_EXPRESSION_BY_ID_FAILURE: {
@@ -87,7 +85,7 @@ export const historyApiReducer = (state = INITIAL_STATE, action) => {
         deleteAllExpressionLoading: false,
         deleteAllExpressionError: null,
         deleteAllExpressionMsg: action.payload,
-        idMsg: id++,
+        idMsg: Math.random() * 100,
       };
     }
     case actions.DELETE_ALL_EXPRESSIONS_FAILURE: {
@@ -106,7 +104,7 @@ export const historyApiReducer = (state = INITIAL_STATE, action) => {
         editExpLoading: false,
         editExpError: null,
         editExpMsg: action.payload,
-        idMsg: id++,
+        idMsg: Math.random() * 100,
       };
     }
     case actions.EDIT_EXPRESSION_FAILURE: {
