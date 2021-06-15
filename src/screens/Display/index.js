@@ -14,7 +14,7 @@ const mapStateToProps = state => {
   return {user, history};
 };
 
-const Display = ({user, navigation}) => {
+const Display = ({navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
