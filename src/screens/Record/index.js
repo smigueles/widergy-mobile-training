@@ -29,7 +29,7 @@ const Record = ({history, navigation}) => {
           <Text style={styles.itemTxt}>Back</Text>
         </TouchableOpacity>
         {history.registers.length !== 0 && (
-          <TouchableOpacity onPress={() => deleteAll()} style={styles?.btnItem}>
+          <TouchableOpacity onPress={deleteAll} style={styles?.btnItem}>
             <Text style={styles.itemTxt}>Clear</Text>
           </TouchableOpacity>
         )}
