@@ -40,7 +40,7 @@ const Display = () => {
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
 
   const saveExpression = exp => {
-    dispatch(historyAction.createExpression([userText]));
+    dispatch(historyAction.createExpression([exp]));
   };
 
   return (

@@ -12,12 +12,12 @@ const mapStateToProps = state => {
   return {history, user, historyApi};
 };
 
-const Record = ({historyApi, navigation}) => {
+const Record = ({historyApi}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(historyAction.getExpressions());
-  }, []);
+  }, [dispatch]);
 
   const deleteAll = () => {
     dispatch(
