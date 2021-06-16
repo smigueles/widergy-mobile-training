@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch, connect} from 'react-redux';
 
 import actionsCreator from '../../redux/auth/actions';

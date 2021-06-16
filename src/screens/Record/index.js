@@ -17,7 +17,7 @@ const Record = ({historyApi, navigation}) => {
 
   useEffect(() => {
     dispatch(historyAction.getExpressions());
-  }, [historyApi.idMsg]);
+  }, []);
 
   const deleteAll = () => {
     dispatch(
@@ -25,30 +25,30 @@ const Record = ({historyApi, navigation}) => {
     );
   };
 
+  const condition =
+    historyApi.expressions !== undefined && historyApi.expressions.length !== 0;
+
   return (
     <React.Fragment>
-      <View style={styles?.navigation}>
+      <View style={styles.navigation}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
+          onPress={deleteAll}
+          disabled={!condition}
           style={styles?.btnItem}>
-          <Text style={styles.itemTxt}>Back</Text>
+          <Text style={styles.itemTxt}>Clear</Text>
         </TouchableOpacity>
-        {historyApi.expressions !== undefined &&
-          historyApi.expressions.length !== 0 && (
-            <TouchableOpacity
-              onPress={() => deleteAll()}
-              style={styles?.btnItem}>
-              <Text style={styles.itemTxt}>Clear</Text>
-            </TouchableOpacity>
-          )}
       </View>
       {historyApi.getExpressionsLoading !== false ? (
         <Text>Loading</Text>
       ) : (
         <View style={styles?.history}>
           {historyApi.expressions !== undefined &&
-            historyApi.expressions.map((n, i) => (
-              <CardExpression n={n} key={i} navigation={navigation} />
+            historyApi.expressions.map((exp, i) => (
+              <CardExpression
+                expression={exp}
+                key={i}
+                navigation={navigation}
+              />
             ))}
         </View>
       )}

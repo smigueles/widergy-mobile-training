@@ -110,6 +110,7 @@ const actionsCreator = {
           response.data.message,
         ),
       );
+      dispatch(actionsCreator.getExpressions());
     } else {
       dispatch(
         privateActionsCreator.deleteExpressionByIdFailure(response.data.error),
@@ -131,6 +132,7 @@ const actionsCreator = {
           response.data.message,
         ),
       );
+      dispatch(actionsCreator.getExpressions());
     } else {
       dispatch(
         privateActionsCreator.deleteAllExpressionsFailure(response.problem),
@@ -138,7 +140,7 @@ const actionsCreator = {
       );
     }
   },
-  editExpressions: (id, exp, navigation) => async dispatch => {
+  editExpressions: (id, exp) => async dispatch => {
     dispatch({type: actions.EDIT_EXPRESSION});
 
     const response = await api.put(`/calc/expressions/${id}`, {
@@ -149,6 +151,7 @@ const actionsCreator = {
       dispatch(
         privateActionsCreator.editExpressionSuccess(response.data.message),
       );
+      dispatch(actionsCreator.getExpressions());
     } else {
       dispatch(
         privateActionsCreator.editExpressionFailure(response.data.error),

@@ -1,35 +1,17 @@
-import React, {useState, useLayoutEffect} from 'react';
-import {connect, useDispatch} from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import authAction from '../../redux/auth/actions';
 import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
-const mapStateToProps = state => {
-  const {user, history} = state;
-  return {user, history};
-};
-
-const Display = ({user, navigation}) => {
+const Display = () => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={styles.btnLogOut}
-          onPress={() => dispatch(authAction.logOut(navigation))}>
-          <Text style={styles.logOutTxt}>Logout</Text>
-        </TouchableOpacity>
-      ),
-    });
-  });
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -84,4 +66,4 @@ const Display = ({user, navigation}) => {
   );
 };
 
-export default connect(mapStateToProps)(Display);
+export default Display;
