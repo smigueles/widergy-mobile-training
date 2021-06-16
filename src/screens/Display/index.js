@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Alert} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import {createButtons} from '../../utils/createButtons';
+import actionsCreator from '../../redux/actions';
 import {RULES} from '../../constants/rules';
+import {buttonsCreator} from '../../utils/buttons';
 
-const Display = () => {
+const Display = ({navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
+  const dispatch = useDispatch();
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -34,12 +37,26 @@ const Display = () => {
     );
   };
 
-  const buttons = createButtons(userText, setUserText, setCalcText);
+  const buttons = buttonsCreator(userText, setUserText, setCalcText);
+
+  const saveExpression = exp => {
+    dispatch(actionsCreator.saveExp(exp));
+  };
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('History')}
+        style={styles.navigateButton}>
+        <Text style={styles.navigateTxt}>Go to History</Text>
+      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
+        <TouchableOpacity
+          onPress={() => saveExpression(userText)}
+          style={styles.btnAdd}>
+          <Text style={styles.btnAddTxt}>Add</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.calculation}>
         <TextInput

@@ -1,4 +1,4 @@
-export const createButtons = (userText, setUserText, setCalcText) => {
+export const buttonsCreator = (userText, setUserText, setCalcText) => {
   const handlePress = number => {
     if (number === '=') {
       return calculation();
@@ -32,7 +32,8 @@ export const createButtons = (userText, setUserText, setCalcText) => {
     }
     setUserText(userText + op);
   };
-  return [
+
+  const buttons = [
     {
       type: 'operations',
       labels: ['Del', 'Clear', '+', '-', '*', '/'],
@@ -59,4 +60,5 @@ export const createButtons = (userText, setUserText, setCalcText) => {
       action: b => handlePress(b),
     },
   ];
+  return buttons;
 };
