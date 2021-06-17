@@ -12,7 +12,7 @@ const mapStateToProps = state => {
   return {history, user, historyApi};
 };
 
-const Record = ({historyApi}) => {
+const Record = ({historyApi, user}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,6 +38,7 @@ const Record = ({historyApi}) => {
           <Text style={styles.itemTxt}>Clear</Text>
         </TouchableOpacity>
       </View>
+      {user.tokenLoading && <Text>Loading</Text>}
       {historyApi.getExpressionsLoading !== false ? (
         <Text>Loading</Text>
       ) : (

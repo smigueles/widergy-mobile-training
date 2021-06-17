@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {reset} from 'redux-form';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -16,6 +17,10 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
+  const logOut = navigation => {
+    dispatch(authAction.logOut(navigation));
+    dispatch(reset('USER_FORM'));
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -42,7 +47,7 @@ const AppNavigator = () => {
             headerRight: () => (
               <TouchableOpacity
                 style={styles.navigateButton}
-                onPress={() => dispatch(authAction.logOut(navigation))}>
+                onPress={() => logOut(navigation)}>
                 <Text style={styles.navigateTxt}>Logout</Text>
               </TouchableOpacity>
             ),
@@ -62,7 +67,7 @@ const AppNavigator = () => {
             headerRight: () => (
               <TouchableOpacity
                 style={styles.navigateButton}
-                onPress={() => dispatch(authAction.logOut(navigation))}>
+                onPress={() => logOut(navigation)}>
                 <Text style={styles.navigateTxt}>Logout</Text>
               </TouchableOpacity>
             ),

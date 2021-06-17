@@ -7,8 +7,13 @@ export const validate = values => {
   }
   if (!values.password) {
     errors.password = 'Required';
-  } else if (values.password.length < 6) {
-    errors.password = 'Password must contain a minimum of six characters';
+  } else if (values.password.length < 8) {
+    errors.password = 'Password must contain a minimum of eight characters';
+  }
+  if (!values.confirmPassword) {
+    errors.confirmPassword = 'Required';
+  } else if (values.confirmPassword !== values.password) {
+    errors.confirmPassword = 'Passwords are not the same';
   }
   return errors;
 };

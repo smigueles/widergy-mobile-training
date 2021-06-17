@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
@@ -8,7 +8,12 @@ import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
-const Display = () => {
+const mapStateToProps = state => {
+  const {history, user, historyApi} = state;
+  return {history, user, historyApi};
+};
+
+const Display = ({user}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
@@ -46,6 +51,7 @@ const Display = () => {
   return (
     <View style={styles.container}>
       <View style={styles.result}>
+        {user.tokenLoading && <Text>Loading</Text>}
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
           onPress={() => saveExpression(userText)}
@@ -66,4 +72,4 @@ const Display = () => {
   );
 };
 
-export default Display;
+export default connect(mapStateToProps)(Display);
