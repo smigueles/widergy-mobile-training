@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 
 import UserForm from '../../forms/components/UserForm';
@@ -16,7 +16,12 @@ const Welcome = ({navigation, user}) => {
     <View style={styles.body}>
       <View style={styles?.welcomeBox}>
         <UserForm navigation={navigation} />
-        {user.tokenLoading && <Text>Loading</Text>}
+        {user.tokenLoading && (
+          <React.Fragment>
+            <Text>Loading</Text>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </React.Fragment>
+        )}
       </View>
     </View>
   );

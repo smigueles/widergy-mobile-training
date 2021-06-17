@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, ActivityIndicator} from 'react-native';
 
 import CardExpression from '../../components/CardExpression';
 import historyAction from '../../redux/historyApi/actions';
@@ -38,9 +38,17 @@ const Record = ({historyApi, user}) => {
           <Text style={styles.itemTxt}>Clear</Text>
         </TouchableOpacity>
       </View>
-      {user.tokenLoading && <Text>Loading</Text>}
+      {user.tokenLoading && (
+        <React.Fragment>
+          <Text>Loading</Text>
+          <ActivityIndicator size="small" color="#0000ff" />
+        </React.Fragment>
+      )}
       {historyApi.getExpressionsLoading !== false ? (
-        <Text>Loading</Text>
+        <React.Fragment>
+          <Text>Loading</Text>
+          <ActivityIndicator size="small" color="#0000ff" />
+        </React.Fragment>
       ) : (
         <View style={styles?.history}>
           {historyApi.expressions !== undefined &&

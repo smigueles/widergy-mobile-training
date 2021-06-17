@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
 import {connect, useDispatch} from 'react-redux';
-import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
@@ -51,7 +58,12 @@ const Display = ({user}) => {
   return (
     <View style={styles.container}>
       <View style={styles.result}>
-        {user.tokenLoading && <Text>Loading</Text>}
+        {user.tokenLoading && (
+          <React.Fragment>
+            <Text>Loading</Text>
+            <ActivityIndicator size="small" color="#0000ff" />
+          </React.Fragment>
+        )}
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity
           onPress={() => saveExpression(userText)}
