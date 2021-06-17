@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {styles} from './style';
 import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 
-const CardExpression = ({n}) => {
+const CardExpression = ({expression}) => {
   const [show, setShow] = useState(true);
   const [editTxt, setEditTxt] = useState('');
   const dispatch = useDispatch();
@@ -31,8 +31,8 @@ const CardExpression = ({n}) => {
 
   const saveCondition = () => {
     return editTxt !== ''
-      ? () => save(editTxt, n.id)
-      : () => save(n.expression, n.id);
+      ? () => save(editTxt, expression.id)
+      : () => save(expression.expression, expression.id);
   };
 
   const deleteExpression = id => {
@@ -43,13 +43,13 @@ const CardExpression = ({n}) => {
     <View style={styles.box}>
       <TextInput
         style={styles.text}
-        placeholder={n.expression}
+        placeholder={expression.expression}
         onKeyPress={handleEditTxt}
         value={editTxt}
         editable={!show}
       />
       <TouchableOpacity
-        onPress={() => deleteExpression(n.id)}
+        onPress={() => deleteExpression(expression.id)}
         style={styles.btn}>
         <Text style={styles.btnText}>X</Text>
       </TouchableOpacity>

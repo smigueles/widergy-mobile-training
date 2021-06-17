@@ -47,8 +47,8 @@ const Record = ({historyApi, navigation}) => {
       ) : (
         <View style={styles?.history}>
           {historyApi.expressions !== undefined &&
-            historyApi.expressions.map((n, i) => (
-              <CardExpression n={n} key={i} navigation={navigation} />
+            historyApi.expressions.map((exp, i) => (
+              <CardExpression expression={exp} key={i} />
             ))}
         </View>
       )}
