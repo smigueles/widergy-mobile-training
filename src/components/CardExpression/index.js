@@ -39,6 +39,9 @@ const CardExpression = ({expression}) => {
     dispatch(historyAction.deleteExpresionById(id));
   };
 
+  const buttonAction = show ? () => setShow(!show) : saveCondition();
+  const buttontext = show ? 'Edit' : 'Save';
+
   return (
     <View style={styles.box}>
       <TextInput
@@ -53,15 +56,9 @@ const CardExpression = ({expression}) => {
         style={styles.btn}>
         <Text style={styles.btnText}>X</Text>
       </TouchableOpacity>
-      {show ? (
-        <TouchableOpacity onPress={() => setShow(!show)} style={styles.btn}>
-          <Text style={styles.btnText}>Edit</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={saveCondition()} style={styles.btn}>
-          <Text style={styles.btnText}>Save</Text>
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity onPress={() => buttonAction()} style={styles.btn}>
+        <Text style={styles.btnText}>{buttontext}</Text>
+      </TouchableOpacity>
     </View>
   );
 };

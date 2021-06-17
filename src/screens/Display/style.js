@@ -4,18 +4,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  navigateButton: {
-    margin: 5,
-    backgroundColor: '#bd94ff',
-    borderRadius: 20,
-    padding: 5,
-  },
-  navigateTxt: {
-    padding: 3,
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: '#1f1633',
-  },
   btnAdd: {
     margin: 5,
     backgroundColor: '#bd94ff',
@@ -49,16 +37,5 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
-  },
-  btnLogOut: {
-    margin: 5,
-    backgroundColor: '#bd94ff',
-    borderRadius: 20,
-    padding: 5,
-  },
-  logOutTxt: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: '#1f1633',
   },
 });

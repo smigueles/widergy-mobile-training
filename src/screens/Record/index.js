@@ -12,12 +12,12 @@ const mapStateToProps = state => {
   return {history, user, historyApi};
 };
 
-const Record = ({historyApi, navigation}) => {
+const Record = ({historyApi}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(historyAction.getExpressions());
-  }, [historyApi.idMsg]);
+  }, [dispatch]);
 
   const deleteAll = () => {
     dispatch(
@@ -25,22 +25,18 @@ const Record = ({historyApi, navigation}) => {
     );
   };
 
+  const condition =
+    historyApi.expressions !== undefined && historyApi.expressions.length !== 0;
+
   return (
     <React.Fragment>
-      <View style={styles?.navigation}>
+      <View style={styles.navigation}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
+          onPress={deleteAll}
+          disabled={!condition}
           style={styles?.btnItem}>
-          <Text style={styles.itemTxt}>Back</Text>
+          <Text style={styles.itemTxt}>Clear</Text>
         </TouchableOpacity>
-        {historyApi.expressions !== undefined &&
-          historyApi.expressions.length !== 0 && (
-            <TouchableOpacity
-              onPress={() => deleteAll()}
-              style={styles?.btnItem}>
-              <Text style={styles.itemTxt}>Clear</Text>
-            </TouchableOpacity>
-          )}
       </View>
       {historyApi.getExpressionsLoading !== false ? (
         <Text>Loading</Text>

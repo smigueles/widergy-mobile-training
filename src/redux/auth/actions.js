@@ -73,8 +73,6 @@ const actionsCreator = {
   },
   logOut: navigation => async dispatch => {
     dispatch({type: actions.LOGOUT});
-    //const {token} = getState().user.token;
-
     const response = await api.get('/auth/logout');
     if (response.ok) {
       dispatch(privateActionsCreator.logOutSuccess(response.data.message));
