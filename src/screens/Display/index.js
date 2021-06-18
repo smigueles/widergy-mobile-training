@@ -1,14 +1,25 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Alert} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
+<<<<<<< HEAD
 import {createButtons} from '../../utils/createButtons';
 import {RULES} from '../../constants/rules';
+=======
+import {saveExp} from '../../redux/actions';
+import {RULES} from '../../constants/rules';
+import {buttonsCreator} from '../../utils/buttons';
+>>>>>>> navigation
 
-const Display = () => {
+const Display = ({navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
+<<<<<<< HEAD
+=======
+  const dispatch = useDispatch();
+>>>>>>> navigation
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -34,12 +45,26 @@ const Display = () => {
     );
   };
 
+<<<<<<< HEAD
   const buttons = createButtons(userText, setUserText, setCalcText);
+=======
+  const buttons = buttonsCreator(userText, setUserText, setCalcText);
+>>>>>>> navigation
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('History')}
+        style={styles.navigateButton}>
+        <Text style={styles.navigateTxt}>Go to History</Text>
+      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
+        <TouchableOpacity
+          onPress={() => dispatch(saveExp(userText))}
+          style={styles.btnAdd}>
+          <Text style={styles.btnAddTxt}>Add</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.calculation}>
         <TextInput
