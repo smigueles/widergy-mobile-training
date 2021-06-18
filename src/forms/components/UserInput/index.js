@@ -3,14 +3,16 @@ import {Text, TextInput} from 'react-native';
 
 import {styles} from './style';
 
-const EmailInput = ({
+const UserInput = ({
   label,
+  secure = false,
   input: {onChange, ...restInput},
   meta: {submitFailed, error},
 }) => {
   return (
     <Fragment>
       <TextInput
+        secureTextEntry={secure}
         style={styles.input}
         onChangeText={onChange}
         {...restInput}
@@ -21,4 +23,4 @@ const EmailInput = ({
   );
 };
 
-export default EmailInput;
+export default UserInput;

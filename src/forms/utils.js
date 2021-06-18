@@ -1,5 +1,4 @@
-import EmailInput from './components/EmailInput';
-import PassInput from './components/PassInput';
+import UserInput from './components/UserInput';
 
 export const createFields = (
   condition,
@@ -15,13 +14,13 @@ export const createFields = (
           name: 'email',
           label: 'email',
           normalize: lower,
-          component: EmailInput,
+          component: UserInput,
           validate: [required, email],
         },
         {
           name: 'password',
           label: 'password',
-          component: PassInput,
+          component: UserInput,
           validate: [required, minChar],
         },
       ]
@@ -30,19 +29,19 @@ export const createFields = (
           name: 'email',
           label: 'email',
           normalize: lower,
-          component: EmailInput,
+          component: UserInput,
           validate: [required, email],
         },
         {
           name: 'password',
           label: 'password',
-          component: PassInput,
+          component: UserInput,
           validate: [required, minChar],
         },
         {
           name: 'confirmPassword',
           label: 'confirm password',
-          component: PassInput,
+          component: UserInput,
           validate: [required, checkPass],
         },
       ];
