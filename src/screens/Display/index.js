@@ -4,11 +4,11 @@ import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-import actionsCreator from '../../redux/actions';
+import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
-const Display = ({navigation}) => {
+const Display = () => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
@@ -40,16 +40,11 @@ const Display = ({navigation}) => {
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
 
   const saveExpression = exp => {
-    dispatch(actionsCreator.saveExp(exp));
+    dispatch(historyAction.createExpression([exp]));
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('History')}
-        style={styles.navigateButton}>
-        <Text style={styles.navigateTxt}>Go to History</Text>
-      </TouchableOpacity>
       <View style={styles.result}>
         <Text style={styles.resultText}>{calcText}</Text>
         <TouchableOpacity

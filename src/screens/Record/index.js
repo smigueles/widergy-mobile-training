@@ -1,44 +1,53 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
 import {View, TouchableOpacity, Text} from 'react-native';
 
-import actionsCreator from '../../redux/actions';
-
 import CardExpression from '../../components/CardExpression';
+import historyAction from '../../redux/historyApi/actions';
 
 import {styles} from './style';
 
 const mapStateToProps = state => {
-  const {history} = state;
-  return {history};
+  const {history, user, historyApi} = state;
+  return {history, user, historyApi};
 };
 
-const Record = ({history, navigation}) => {
+const Record = ({historyApi}) => {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(historyAction.getExpressions());
+  }, [dispatch]);
+
   const deleteAll = () => {
-    dispatch(actionsCreator.clearRegisters());
+    dispatch(
+      historyAction.deleteAllExpressions(historyApi.expressions.map(e => e.id)),
+    );
   };
+
+  const condition =
+    historyApi.expressions !== undefined && historyApi.expressions.length !== 0;
 
   return (
     <React.Fragment>
-      <View style={styles?.navigation}>
+      <View style={styles.navigation}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
+          onPress={deleteAll}
+          disabled={!condition}
           style={styles?.btnItem}>
-          <Text style={styles.itemTxt}>Back</Text>
+          <Text style={styles.itemTxt}>Clear</Text>
         </TouchableOpacity>
-        {history.registers.length !== 0 && (
-          <TouchableOpacity onPress={deleteAll} style={styles?.btnItem}>
-            <Text style={styles.itemTxt}>Clear</Text>
-          </TouchableOpacity>
-        )}
       </View>
-      <View style={styles?.history}>
-        {history.registers.map((n, i) => (
-          <CardExpression n={n} key={i} />
-        ))}
-      </View>
+      {historyApi.getExpressionsLoading !== false ? (
+        <Text>Loading</Text>
+      ) : (
+        <View style={styles?.history}>
+          {historyApi.expressions !== undefined &&
+            historyApi.expressions.map((exp, i) => (
+              <CardExpression expression={exp} key={i} />
+            ))}
+        </View>
+      )}
     </React.Fragment>
   );
 };
