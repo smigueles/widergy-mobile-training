@@ -1,28 +1,29 @@
-import {
-  SAVE_EXPRESSION,
-  DELETE_EXPRESSION,
-  CLEAR_REGISTER,
-  EDIT_EXPRESSION,
-} from './actionTypes';
+import {createTypes} from 'redux-recompose';
 
-export const saveExp = expresion => ({
-  type: SAVE_EXPRESSION,
-  payload: expresion,
-});
+export const actions = createTypes(
+  ['SAVE_EXPRESSION', 'DELETE_EXPRESSION', 'CLEAR_REGISTER', 'EDIT_EXPRESSION'],
+  '@HISTORY',
+);
 
-export const deleteExp = id => ({
-  type: DELETE_EXPRESSION,
-  payload: id,
-});
+const actionsCreator = {
+  saveExp: expresion => ({
+    type: actions.SAVE_EXPRESSION,
+    payload: expresion,
+  }),
+  deleteExp: id => ({
+    type: actions.DELETE_EXPRESSION,
+    payload: id,
+  }),
+  clearRegisters: () => ({
+    type: actions.CLEAR_REGISTER,
+  }),
+  editExp: (expresion, id) => ({
+    type: actions.EDIT_EXPRESSION,
+    payload: {
+      expresion: expresion,
+      id: id,
+    },
+  }),
+};
 
-export const clearRegisters = () => ({
-  type: CLEAR_REGISTER,
-});
-
-export const editExp = (expresion, id) => ({
-  type: EDIT_EXPRESSION,
-  payload: {
-    expresion: expresion,
-    id: id,
-  },
-});
+export default actionsCreator;
