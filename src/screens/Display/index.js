@@ -4,22 +4,14 @@ import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
-<<<<<<< HEAD
-import {createButtons} from '../../utils/createButtons';
-import {RULES} from '../../constants/rules';
-=======
 import {saveExp} from '../../redux/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
->>>>>>> navigation
 
 const Display = ({navigation}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
-<<<<<<< HEAD
-=======
   const dispatch = useDispatch();
->>>>>>> navigation
 
   const calculation = () => {
     // eslint-disable-next-line no-eval
@@ -45,11 +37,7 @@ const Display = ({navigation}) => {
     );
   };
 
-<<<<<<< HEAD
-  const buttons = createButtons(userText, setUserText, setCalcText);
-=======
   const buttons = buttonsCreator(userText, setUserText, setCalcText);
->>>>>>> navigation
 
   return (
     <View style={styles.container}>
