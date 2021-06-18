@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, TextInput} from 'react-native';
 
 import {styles} from './style';
@@ -6,18 +6,18 @@ import {styles} from './style';
 const EmailInput = ({
   label,
   input: {onChange, ...restInput},
-  meta: {touched, error},
+  meta: {submitFailed, error},
 }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <TextInput
         style={styles.input}
         onChangeText={onChange}
         {...restInput}
         placeholder={label}
       />
-      {touched && error && <Text>{error}</Text>}
-    </React.Fragment>
+      {submitFailed && error && <Text>{error}</Text>}
+    </Fragment>
   );
 };
 

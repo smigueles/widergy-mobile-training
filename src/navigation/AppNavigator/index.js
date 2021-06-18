@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {reset} from 'redux-form';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -19,7 +18,6 @@ const AppNavigator = () => {
   const dispatch = useDispatch();
   const logOut = navigation => {
     dispatch(authAction.logOut(navigation));
-    dispatch(reset('USER_FORM'));
   };
   return (
     <NavigationContainer>

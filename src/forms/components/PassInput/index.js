@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, TextInput} from 'react-native';
 
 import {styles} from './style';
@@ -6,10 +6,10 @@ import {styles} from './style';
 const PassInput = ({
   label,
   input: {onChange, ...restInput},
-  meta: {touched, error},
+  meta: {submitFailed, error},
 }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <TextInput
         secureTextEntry={true}
         style={styles.input}
@@ -17,8 +17,8 @@ const PassInput = ({
         {...restInput}
         placeholder={label}
       />
-      {touched && error && <Text>{error}</Text>}
-    </React.Fragment>
+      {submitFailed && error && <Text>{error}</Text>}
+    </Fragment>
   );
 };
 

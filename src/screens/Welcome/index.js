@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {View, Text, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 
@@ -6,25 +6,26 @@ import UserForm from '../../forms/components/UserForm';
 
 import {styles} from './style';
 
-const mapStateToProps = state => {
-  const {user} = state;
-  return {user};
-};
-
-const Welcome = ({navigation, user}) => {
+const Welcome = ({navigation, tokenLoading}) => {
   return (
     <View style={styles.body}>
       <View style={styles?.welcomeBox}>
-        <UserForm navigation={navigation} />
-        {user.tokenLoading && (
-          <React.Fragment>
+        {tokenLoading ? (
+          <Fragment>
             <Text>Loading</Text>
             <ActivityIndicator size="small" color="#0000ff" />
-          </React.Fragment>
+          </Fragment>
+        ) : (
+          <UserForm navigation={navigation} />
         )}
       </View>
     </View>
   );
+};
+
+const mapStateToProps = ({user}) => {
+  const {tokenLoading} = user;
+  return {tokenLoading};
 };
 
 export default connect(mapStateToProps)(Welcome);
