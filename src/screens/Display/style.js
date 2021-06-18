@@ -4,17 +4,9 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  navigateButton: {
-    backgroundColor: '#4f4364',
-  },
-  navigateTxt: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1f1633',
-  },
   btnAdd: {
     margin: 5,
-    backgroundColor: '#e8d5b5',
+    backgroundColor: '#bd94ff',
     borderRadius: 20,
     padding: 5,
   },

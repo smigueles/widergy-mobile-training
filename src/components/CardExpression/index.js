@@ -3,10 +3,10 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {styles} from './style';
-import actionsCreator from '../../redux/actions';
+import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 
-const CardExpression = ({n}) => {
+const CardExpression = ({expression}) => {
   const [show, setShow] = useState(true);
   const [editTxt, setEditTxt] = useState('');
   const dispatch = useDispatch();
@@ -24,19 +24,19 @@ const CardExpression = ({n}) => {
   };
 
   const save = (exp, id) => {
-    dispatch(actionsCreator.editExp(exp, id));
+    dispatch(historyAction.editExpressions(id, exp));
     setShow(!show);
     setEditTxt('');
   };
 
   const saveCondition = () => {
     return editTxt !== ''
-      ? () => save(editTxt, n.id)
-      : () => save(n.expresion, n.id);
+      ? () => save(editTxt, expression.id)
+      : () => save(expression.expression, expression.id);
   };
 
   const deleteExpression = id => {
-    dispatch(actionsCreator.deleteExp(id));
+    dispatch(historyAction.deleteExpresionById(id));
   };
 
   const buttonAction = show ? () => setShow(!show) : saveCondition();
@@ -46,13 +46,13 @@ const CardExpression = ({n}) => {
     <View style={styles.box}>
       <TextInput
         style={styles.text}
-        placeholder={n.expresion}
+        placeholder={expression.expression}
         onKeyPress={handleEditTxt}
         value={editTxt}
         editable={!show}
       />
       <TouchableOpacity
-        onPress={() => deleteExpression(n.id)}
+        onPress={() => deleteExpression(expression.id)}
         style={styles.btn}>
         <Text style={styles.btnText}>X</Text>
       </TouchableOpacity>

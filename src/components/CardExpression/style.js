@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#bd94ff',
-    margin: 3,
+    margin: 5,
     borderRadius: 40,
   },
   btnText: {

@@ -1,7 +1,9 @@
-import {actions} from '../actions';
+import {actions} from './actions';
 
 const INITIAL_STATE = {
   registers: [],
+  registersLoading: false,
+  registersError: null,
 };
 
 export const historyReducer = (state = INITIAL_STATE, action) => {
