@@ -53,10 +53,10 @@ const Display = ({tokenLoading}) => {
   return (
     <View style={styles.container}>
       {tokenLoading ? (
-        <Fragment>
+        <View style={styles.loading}>
           <Text>Loading</Text>
           <ActivityIndicator size="small" color="#0000ff" />
-        </Fragment>
+        </View>
       ) : (
         <Fragment>
           <View style={styles.result}>

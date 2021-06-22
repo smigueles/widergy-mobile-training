@@ -38,4 +38,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
+  loading: {
+    alignSelf: 'center',
+  },
 });

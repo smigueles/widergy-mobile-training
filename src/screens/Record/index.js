@@ -23,10 +23,10 @@ const Record = ({expressions, getExpressionsLoading, tokenLoading}) => {
   return (
     <Fragment>
       {tokenLoading ? (
-        <Fragment>
+        <View style={styles.loading}>
           <Text>Loading</Text>
           <ActivityIndicator size="small" color="#0000ff" />
-        </Fragment>
+        </View>
       ) : (
         <Fragment>
           <View style={styles.navigation}>
@@ -38,10 +38,10 @@ const Record = ({expressions, getExpressionsLoading, tokenLoading}) => {
             </TouchableOpacity>
           </View>
           {getExpressionsLoading !== false ? (
-            <Fragment>
+            <View style={styles.loading}>
               <Text>Loading</Text>
               <ActivityIndicator size="small" color="#0000ff" />
-            </Fragment>
+            </View>
           ) : (
             <View style={styles?.history}>
               {expressions !== undefined &&
