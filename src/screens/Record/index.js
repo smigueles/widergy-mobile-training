@@ -1,18 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import {connect, useDispatch} from 'react-redux';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, ActivityIndicator} from 'react-native';
 
 import CardExpression from '../../components/CardExpression';
 import historyAction from '../../redux/historyApi/actions';
 
 import {styles} from './style';
 
-const mapStateToProps = state => {
-  const {history, user, historyApi} = state;
-  return {history, user, historyApi};
-};
-
-const Record = ({historyApi}) => {
+const Record = ({expressions, getExpressionsLoading, tokenLoading}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,36 +15,51 @@ const Record = ({historyApi}) => {
   }, [dispatch]);
 
   const deleteAll = () => {
-    dispatch(
-      historyAction.deleteAllExpressions(historyApi.expressions.map(e => e.id)),
-    );
+    dispatch(historyAction.deleteAllExpressions(expressions.map(e => e.id)));
   };
 
-  const condition =
-    historyApi.expressions !== undefined && historyApi.expressions.length !== 0;
+  const condition = expressions !== undefined && expressions.length !== 0;
 
   return (
-    <React.Fragment>
-      <View style={styles.navigation}>
-        <TouchableOpacity
-          onPress={deleteAll}
-          disabled={!condition}
-          style={styles?.btnItem}>
-          <Text style={styles.itemTxt}>Clear</Text>
-        </TouchableOpacity>
-      </View>
-      {historyApi.getExpressionsLoading !== false ? (
-        <Text>Loading</Text>
-      ) : (
-        <View style={styles?.history}>
-          {historyApi.expressions !== undefined &&
-            historyApi.expressions.map((exp, i) => (
-              <CardExpression expression={exp} key={i} />
-            ))}
+    <Fragment>
+      {tokenLoading ? (
+        <View style={styles.loading}>
+          <Text>Loading</Text>
+          <ActivityIndicator size="small" color="#0000ff" />
         </View>
+      ) : (
+        <Fragment>
+          <View style={styles.navigation}>
+            <TouchableOpacity
+              onPress={deleteAll}
+              disabled={!condition}
+              style={styles?.btnItem}>
+              <Text style={styles.itemTxt}>Clear</Text>
+            </TouchableOpacity>
+          </View>
+          {getExpressionsLoading !== false ? (
+            <View style={styles.loading}>
+              <Text>Loading</Text>
+              <ActivityIndicator size="small" color="#0000ff" />
+            </View>
+          ) : (
+            <View style={styles?.history}>
+              {expressions !== undefined &&
+                expressions.map((exp, i) => (
+                  <CardExpression expression={exp} key={i} />
+                ))}
+            </View>
+          )}
+        </Fragment>
       )}
-    </React.Fragment>
+    </Fragment>
   );
+};
+
+const mapStateToProps = ({user, historyApi}) => {
+  const {tokenLoading} = user;
+  const {expressions, getExpressionsLoading} = historyApi;
+  return {tokenLoading, expressions, getExpressionsLoading};
 };
 
 export default connect(mapStateToProps)(Record);

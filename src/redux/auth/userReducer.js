@@ -18,6 +18,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         tokenLoading: false,
         tokenError: null,
         token: action.payload,
+        tokenMsg: null,
       };
     }
     case actions.REGISTER_TOKEN_FAILURE: {

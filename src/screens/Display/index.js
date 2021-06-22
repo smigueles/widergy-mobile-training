@@ -1,6 +1,13 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {View, Text, TextInput, Alert, TouchableOpacity} from 'react-native';
+import React, {useState, Fragment} from 'react';
+import {connect, useDispatch} from 'react-redux';
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 import CalcButton from '../../components/CalcButtons';
 import {styles} from './style';
@@ -8,7 +15,7 @@ import historyAction from '../../redux/historyApi/actions';
 import {RULES} from '../../constants/rules';
 import {buttonsCreator} from '../../utils/buttons';
 
-const Display = () => {
+const Display = ({tokenLoading}) => {
   const [userText, setUserText] = useState('');
   const [calcText, setCalcText] = useState('');
   const dispatch = useDispatch();
@@ -45,25 +52,39 @@ const Display = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.result}>
-        <Text style={styles.resultText}>{calcText}</Text>
-        <TouchableOpacity
-          onPress={() => saveExpression(userText)}
-          style={styles.btnAdd}>
-          <Text style={styles.btnAddTxt}>Add</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.calculation}>
-        <TextInput
-          style={styles.calcText}
-          onKeyPress={handleInput}
-          returnKeyType="go"
-          value={userText}
-        />
-      </View>
-      <CalcButton buttons={buttons} />
+      {tokenLoading ? (
+        <View style={styles.loading}>
+          <Text>Loading</Text>
+          <ActivityIndicator size="small" color="#0000ff" />
+        </View>
+      ) : (
+        <Fragment>
+          <View style={styles.result}>
+            <Text style={styles.resultText}>{calcText}</Text>
+            <TouchableOpacity
+              onPress={() => saveExpression(userText)}
+              style={styles.btnAdd}>
+              <Text style={styles.btnAddTxt}>Add</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.calculation}>
+            <TextInput
+              style={styles.calcText}
+              onKeyPress={handleInput}
+              returnKeyType="go"
+              value={userText}
+            />
+          </View>
+          <CalcButton buttons={buttons} />
+        </Fragment>
+      )}
     </View>
   );
 };
 
-export default Display;
+const mapStateToProps = ({user}) => {
+  const {tokenLoading} = user;
+  return {tokenLoading};
+};
+
+export default connect(mapStateToProps)(Display);
