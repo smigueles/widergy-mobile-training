@@ -11,8 +11,8 @@ import {required, email, minChar, checkPass} from '../../validate';
 
 import {styles} from './style';
 
-const UserForm = ({navigation, handleSubmit, reset, submitting}) => {
-  const [changeForm, setChangeForm] = useState(true);
+const UserForm = ({navigation, handleSubmit, reset, submitFailed, invalid}) => {
+  const [changeForm, setChangeForm] = useState(false);
   const dispatch = useDispatch();
 
   const submitLogin = values => {
@@ -23,8 +23,8 @@ const UserForm = ({navigation, handleSubmit, reset, submitting}) => {
     dispatch(actionsCreator.registerToken(navigation, values));
   };
 
-  const submit = changeForm ? submitLogin : submitRegister;
-  const buttonTxt = changeForm ? 'Login' : 'Register';
+  const submit = changeForm ? submitRegister : submitLogin;
+  const buttonTxt = changeForm ? 'Register' : 'Login';
 
   const handleForm = () => {
     setChangeForm(prevState => !prevState);
@@ -40,18 +40,6 @@ const UserForm = ({navigation, handleSubmit, reset, submitting}) => {
   return (
     <Fragment>
       {fields.map((field, i) => {
-        if (field.normalize) {
-          return (
-            <Field
-              key={i}
-              name={field.name}
-              component={field.component}
-              label={field.label}
-              normalize={field.normalize}
-              validate={field.validate}
-            />
-          );
-        }
         return (
           <Field
             key={i}
@@ -59,12 +47,13 @@ const UserForm = ({navigation, handleSubmit, reset, submitting}) => {
             component={field.component}
             label={field.label}
             validate={field.validate}
-            secure={true}
+            normalize={field?.normalize}
+            secure={field.security}
           />
         );
       })}
       <TouchableOpacity
-        disabled={submitting}
+        disabled={submitFailed && invalid}
         style={styles.startBtn}
         onPress={handleSubmit(submit)}>
         <Text style={styles.startTxt}>{buttonTxt}</Text>
