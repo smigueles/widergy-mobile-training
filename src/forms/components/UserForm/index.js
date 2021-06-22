@@ -1,4 +1,4 @@
-import React, {useState, Fragment, useEffect} from 'react';
+import React, {useState, Fragment} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {Field, reduxForm} from 'redux-form';
 import {useDispatch} from 'react-redux';
@@ -13,7 +13,7 @@ import {required, email, minChar, checkPass} from '../../validate';
 
 import {styles} from './style';
 
-const UserForm = ({navigation, handleSubmit, reset, submitting, tokenMsg}) => {
+const UserForm = ({navigation, handleSubmit, reset, submitting}) => {
   const [changeForm, setChangeForm] = useState(true);
   const dispatch = useDispatch();
 
@@ -31,11 +31,6 @@ const UserForm = ({navigation, handleSubmit, reset, submitting, tokenMsg}) => {
   const handleForm = () => {
     setChangeForm(prevState => !prevState);
     reset();
-  };
-
-  const submitButton = values => {
-    submit(values);
-    if (tokenMsg === null) setChangeForm(true);
   };
 
   const textForm = changeForm
@@ -73,7 +68,7 @@ const UserForm = ({navigation, handleSubmit, reset, submitting, tokenMsg}) => {
       <TouchableOpacity
         disabled={submitting}
         style={styles.startBtn}
-        onPress={handleSubmit(submitButton)}>
+        onPress={handleSubmit(submit)}>
         <Text style={styles.startTxt}>{buttonTxt}</Text>
       </TouchableOpacity>
 
@@ -84,16 +79,6 @@ const UserForm = ({navigation, handleSubmit, reset, submitting, tokenMsg}) => {
   );
 };
 
-const mapStateToProps = ({user}) => {
-  const {tokenMsg} = user;
-  return {tokenMsg};
-};
-
-const enhance = compose(
-  connect(mapStateToProps),
-  reduxForm({
-    form: USER_FORM,
-  }),
-);
-
-export default enhance(UserForm);
+export default reduxForm({
+  form: USER_FORM,
+})(UserForm);
