@@ -2,8 +2,6 @@ import React, {useState, Fragment} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {Field, reduxForm} from 'redux-form';
 import {useDispatch} from 'react-redux';
-import {connect} from 'react-redux';
-import {compose} from 'recompose';
 
 import {createFields} from '../../utils';
 import {USER_FORM} from '../../constants';
