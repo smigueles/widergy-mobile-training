@@ -16,6 +16,9 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
+  const logOut = navigation => {
+    dispatch(authAction.logOut(navigation));
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -42,7 +45,7 @@ const AppNavigator = () => {
             headerRight: () => (
               <TouchableOpacity
                 style={styles.navigateButton}
-                onPress={() => dispatch(authAction.logOut(navigation))}>
+                onPress={() => logOut(navigation)}>
                 <Text style={styles.navigateTxt}>Logout</Text>
               </TouchableOpacity>
             ),
@@ -62,7 +65,7 @@ const AppNavigator = () => {
             headerRight: () => (
               <TouchableOpacity
                 style={styles.navigateButton}
-                onPress={() => dispatch(authAction.logOut(navigation))}>
+                onPress={() => logOut(navigation)}>
                 <Text style={styles.navigateTxt}>Logout</Text>
               </TouchableOpacity>
             ),
