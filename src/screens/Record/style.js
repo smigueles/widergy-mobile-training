@@ -22,4 +22,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
+  loading: {
+    alignSelf: 'center',
+  },
 });
